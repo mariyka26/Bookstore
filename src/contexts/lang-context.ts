@@ -1,5 +1,5 @@
 import { createContext } from 'react'
-import type { LangContextType } from '../types'
+import type { LangContextType } from '../types/types'
 
 export const initialState: LangContextType = {
     lang: 'en',
