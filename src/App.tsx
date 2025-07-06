@@ -3,7 +3,7 @@ import { RouterProvider } from 'react-router'
 import { Provider } from 'react-redux'
 import { router } from './router'
 import { LangContext, initialState as langInitialState } from './contexts/lang-context'
-import type { LangType } from './types'
+import type { LangType } from './types/types'
 import { store } from './redux/store'
 
 export function App(): React.ReactElement {

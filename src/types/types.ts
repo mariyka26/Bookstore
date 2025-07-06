@@ -4,3 +4,4 @@ export interface LangContextType {
     lang: LangType
     setLang: (lang: LangType) => void
 }
+
