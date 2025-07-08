@@ -7,6 +7,7 @@ export type BooksParamsType = {
 
 /** Одна книга */
 export type BookType = {
+    id: number;
     title: string;
     subtitle: string;
     isbn13: string;

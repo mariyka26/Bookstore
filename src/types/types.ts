@@ -1,3 +1,4 @@
+import type { BookType } from './books';
 export type LangType = 'en' | 'ru'
 
 export interface LangContextType {
@@ -20,4 +21,9 @@ export interface LayoutContextType {
     setBreadcrumbs: (breadcrumbs: Array<{ label: string; to: string }>) => void;
     showSubscribe: boolean;
     setShowSubscribe: (showSubscribe: boolean) => void;
+}
+
+export type BookPreviewStateType = {
+    isShownModal: boolean
+    data: BookType | null
 }
