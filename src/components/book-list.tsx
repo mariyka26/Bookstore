@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router';
 import { useAppDispatch, useAppSelector } from '../redux/store';
 import { fetchBooks } from '../redux/books-slice';
-import { CardBook } from './card-book';
+import { CardBookTile } from './card-book-tile';
 import { BOOKS_LIMIT } from '../redux/books-slice';
 import { Pagination } from './pagination';
 
@@ -26,7 +26,6 @@ export function BookList() {
 
     return (
         <div>
-            {/* пагинация вынесена в отдельный компонент */}
             <Pagination
                 total={total}
                 currentPage={currentPage}
@@ -40,7 +39,7 @@ export function BookList() {
                       lg:grid-cols-3
                       xl:gap-x-12 xl:gap-y-14">
                 {list.map((book, idx) => (
-                    <CardBook key={book.isbn13} index={idx} {...book} />
+                    <CardBookTile key={book.isbn13} index={idx} {...book} />
                 ))}
             </div>
         </div>

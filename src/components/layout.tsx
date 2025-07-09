@@ -25,8 +25,8 @@ export function Layout() {
         <Container>
           {breadcrumbs.length > 0 && <Breadcrumbs items={breadcrumbs} />}
           {title && <Title>{title}</Title>}
-          {showSubscribe && <SubscribeBlock />}
           <Outlet context={{ title, setTitle, setBreadcrumbs, setShowSubscribe }} />
+          {showSubscribe && <SubscribeBlock />}
         </Container>
       </Main>
 

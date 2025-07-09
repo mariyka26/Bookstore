@@ -35,8 +35,8 @@ export type BooksResponseType = {
 /** Состояние среза books в Redux‑store */
 export type BooksStateType = {
     list: BookType[];       // текущая страница
-    favorites: BookType[];  // «избранное»
     total: number;          // общее кол‑во результатов
     isLoading: boolean;
     error: string | null;
+    favorites: BookType[];  // «избранное»
 };

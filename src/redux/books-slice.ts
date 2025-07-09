@@ -6,6 +6,7 @@ import type {
     BooksResponseType,
 } from '../types/books';
 import { requestBooks } from '../services/books';
+import { loadFavorites, saveFavorites } from '../utils/local-storage';
 
 export const BOOKS_LIMIT = 12;
 
@@ -25,10 +26,10 @@ export const fetchBooks = createAsyncThunk<
 /* ---------- INITIAL STATE ---------- */
 const initialState: BooksStateType = {
     list: [],
-    favorites: [],
     total: 0,
     isLoading: false,
     error: null,
+    favorites: loadFavorites(),
 };
 
 /* ---------- SLICE ---------- */
@@ -36,11 +37,14 @@ export const booksSlice = createSlice({
     name: 'books',
     initialState,
     reducers: {
-        addFavorite: (state, { payload }: PayloadAction<BookType>) => {
-            state.favorites.push(payload);
-        },
-        removeFavorite: (state, { payload }: PayloadAction<string>) => {
-            state.favorites = state.favorites.filter((b) => b.isbn13 !== payload);
+        toggleFavorite: (state, { payload }: PayloadAction<BookType>) => {
+            const isFav = state.favorites.some((b) => b.isbn13 === payload.isbn13);
+            if (isFav) {
+                state.favorites = state.favorites.filter((b) => b.isbn13 !== payload.isbn13);
+            } else {
+                state.favorites.push(payload);
+            }
+            saveFavorites(state.favorites);
         },
     },
     extraReducers: (builder) =>
@@ -62,4 +66,4 @@ export const booksSlice = createSlice({
 
 /* ---------- EXPORTS ---------- */
 export const booksReducer = booksSlice.reducer;
-export const { addFavorite, removeFavorite } = booksSlice.actions;
+export const { toggleFavorite } = booksSlice.actions;

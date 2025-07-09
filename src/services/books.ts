@@ -25,7 +25,7 @@ export async function requestBooks(
 
     for (let p = apiPageStart; p <= apiPageEnd; p++) {
         const url = baseUrl +
-            listBooksEndpoint
+            listNewBooksEndpoint
                 .replace('{query}', encodeURIComponent(query))
                 .replace('{page}', String(p));
 

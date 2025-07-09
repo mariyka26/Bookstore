@@ -3,23 +3,28 @@ import type { RouteObject } from 'react-router'
 import { Main } from './page/main'
 import { Navigate } from 'react-router';
 import { Layout } from './components/layout'
+import { FavoriteBooks } from './page/favorite-books'
 
 
 const routes: RouteObject[] = [
-     {
+    {
         element: <Layout />,
         children: [
-    {
-        path: '/',
-        element: <Navigate to="/books/react" replace />
-    },
+            {
+                path: '/',
+                element: <Navigate to="/books/react" replace />
+            },
 
-    {
-        path: '/books/:query/:page?',
-        element: <Main />
+            {
+                path: '/books/:query/:page?',
+                element: <Main />
+            },
+            {
+                path: '/favorites',
+                element: <FavoriteBooks />
+            }
+        ]
     },
-    ]
-  },
 
 ];
 

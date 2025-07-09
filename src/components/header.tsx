@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from 'react';
-import { useNavigate, Link } from 'react-router';
+import { useNavigate, NavLink } from 'react-router';
 import {
   HeartIcon,
   ShoppingBagIcon,
@@ -27,15 +27,15 @@ export function Header({ container: Container }: FooterProps): ReactElement {
   return (
     <Container>
       <header className="border-b border-gray-200">
-        <div className="mx-auto   lg:px-8">
-          <div className="flex h-16 items-center  ">
+        <div className="mx-auto w-full">
+          <div className="flex h-16 items-center justify-between ">
             {/* ---------- ЛОГО ---------- */}
-            <Link
-              to="/"
+            <NavLink
+              to="/books/react/1"
               className="text-2xl font-extrabold tracking-wide text-gray-800 select-none"
             >
               BOOKSTORE
-            </Link>
+            </NavLink>
 
             {/* ---------- ПОИСК ---------- */}
             <form
@@ -62,17 +62,18 @@ export function Header({ container: Container }: FooterProps): ReactElement {
 
             {/* ---------- ИКОНКИ ---------- */}
             <nav className="flex items-center gap-6">
-              <Link to="/favorites" className="group">
+
+              <NavLink to="/favorites" className="group">
                 <HeartIcon className="h-6 w-6 text-gray-700 group-hover:text-green-600 transition-colors" />
-              </Link>
+              </NavLink>
 
-              <Link to="/cart" className="group">
+              <NavLink to="/cart" className="group">
                 <ShoppingBagIcon className="h-6 w-6 text-gray-700 group-hover:text-green-600 transition-colors" />
-              </Link>
+              </NavLink>
 
-              <Link to="/profile" className="group">
+              <NavLink to="/profile" className="group">
                 <UserCircleIcon className="h-6 w-6 text-gray-700 group-hover:text-green-600 transition-colors" />
-              </Link>
+              </NavLink>
             </nav>
           </div>
         </div>
