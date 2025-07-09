@@ -48,7 +48,7 @@ export function CardBookTile(book: BookType) {
                         </div>
 
                         <Link
-                            to={`/books/${book.isbn13}`}
+                            to={`/book/${book.isbn13}`}
                             className="mt-4 w-full text-center text-xs bg-green-600 text-white py-2 rounded-lg"
                         >
                             Читать далее

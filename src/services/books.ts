@@ -5,6 +5,8 @@ import type {
     BooksResponseType,
     RawBooksApiResponse,
     BookType,
+    BookDetailsType,
+    BookDetailsApiResponse,
 } from '../types/books';
 import { get, post } from "../config/client";
 
@@ -48,4 +50,12 @@ export async function requestBooks(
         page: String(page),
         books,
     };
+}
+
+export async function requestBookDetails(isbn13: string): Promise<BookDetailsType> {
+    console.log('requestBookDetails', isbn13)
+    const url = baseUrl + getBooksByIsbn13Endpoint.replace('{isbn13}', isbn13);
+    const { data } = await get<BookDetailsApiResponse>(url);
+
+    return data;
 }

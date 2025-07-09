@@ -40,3 +40,27 @@ export type BooksStateType = {
     error: string | null;
     favorites: BookType[];  // «избранное»
 };
+
+export type BooksActionType = {
+    type: string;
+    payload?: any;
+};
+
+export type BookDetailsType = {
+    id: number;
+    title: string;
+    subtitle: string;
+    isbn13: string;
+    price: string;
+    image: string;
+    url: string;
+    desc: string;
+    rating: string;
+    year: string;
+    pages: string;
+    lang: string;
+    publisher: string;
+    authors: string[];
+};
+
+export type BookDetailsApiResponse = BookDetailsType;

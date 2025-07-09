@@ -2,11 +2,13 @@ import { configureStore } from "@reduxjs/toolkit";
 import { useDispatch, useSelector } from 'react-redux'
 import { booksReducer } from './books-slice'
 import { bookCoverPreviewReducer } from './book-cover-preview-slice'
+import { bookDetailsReducer } from './book-details-slice'
 
 export const store = configureStore({
     reducer: {
         books: booksReducer,
         bookCoverPreview: bookCoverPreviewReducer,
+        bookDetails: bookDetailsReducer,
     },
 });
 

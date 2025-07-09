@@ -4,6 +4,7 @@ import { Main } from './page/main'
 import { Navigate } from 'react-router';
 import { Layout } from './components/layout'
 import { FavoriteBooks } from './page/favorite-books'
+import { BookDetailsPage } from './page/book-details'
 
 
 const routes: RouteObject[] = [
@@ -14,7 +15,6 @@ const routes: RouteObject[] = [
                 path: '/',
                 element: <Navigate to="/books/react" replace />
             },
-
             {
                 path: '/books/:query/:page?',
                 element: <Main />
@@ -22,6 +22,10 @@ const routes: RouteObject[] = [
             {
                 path: '/favorites',
                 element: <FavoriteBooks />
+            },
+            {
+                path: '/book/:isbn13',
+                element: <BookDetailsPage />
             }
         ]
     },
