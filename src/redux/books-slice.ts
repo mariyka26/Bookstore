@@ -4,17 +4,17 @@ import type {
     BookType,
     BooksParamsType,
     BooksResponseType,
+    BookWithQty
 } from '../types/books';
 import { requestBooks } from '../services/books';
-import { loadFavorites, saveFavorites } from '../utils/local-storage';
+import { loadFavorites, saveFavorites, loadCart, saveCart, loadRatings, saveRatings } from '../utils/local-storage';
 
 export const BOOKS_LIMIT = 12;
 
-/* ---------- THUNK ---------- */
 export const fetchBooks = createAsyncThunk<
-    BooksResponseType,        // возвращаемое значение
-    BooksParamsType,          // аргумент
-    { rejectValue: string }   // тип reject
+    BooksResponseType,
+    BooksParamsType,
+    { rejectValue: string }
 >('books/fetchBooks', async (params, { rejectWithValue }) => {
     try {
         return await requestBooks({ limit: BOOKS_LIMIT, ...params });
@@ -23,18 +23,16 @@ export const fetchBooks = createAsyncThunk<
     }
 });
 
-
-
-/* ---------- INITIAL STATE ---------- */
 const initialState: BooksStateType = {
     list: [],
     total: 0,
     isLoading: false,
     error: null,
     favorites: loadFavorites(),
+    cart: loadCart(),
+    ratings: loadRatings()
 };
 
-/* ---------- SLICE ---------- */
 export const booksSlice = createSlice({
     name: 'books',
     initialState,
@@ -48,7 +46,45 @@ export const booksSlice = createSlice({
             }
             saveFavorites(state.favorites);
         },
+
+        addToCart: (state, { payload }: PayloadAction<BookType>) => {
+            const existing = state.cart.find((b) => b.isbn13 === payload.isbn13);
+            if (existing) {
+                existing.qty = (existing.qty ?? 0) + 1;
+            } else {
+                state.cart.push({ ...payload, qty: 1 } as BookWithQty);
+            }
+            saveCart(state.cart);
+        },
+
+        removeFromCart: (state, { payload }: PayloadAction<string>) => {
+            state.cart = state.cart.filter((b) => b.isbn13 !== payload);
+            saveCart(state.cart);
+        },
+
+        updateQty: (
+            state,
+            { payload }: PayloadAction<{ isbn13: string; qty: number }>
+        ) => {
+            const book = state.cart.find((b) => b.isbn13 === payload.isbn13);
+            if (book) {
+                book.qty = payload.qty;
+                saveCart(state.cart);
+            }
+        },
+        clearCart: (state) => {
+            state.cart = [];
+            saveCart(state.cart);
+        },
+        setRating: (
+            state,
+            { payload }: PayloadAction<{ isbn13: string; rating: number }>
+        ) => {
+            state.ratings[payload.isbn13] = payload.rating;
+            saveRatings(state.ratings);
+        },
     },
+
     extraReducers: (builder) =>
         builder
             .addCase(fetchBooks.pending, (state) => {
@@ -66,6 +102,12 @@ export const booksSlice = createSlice({
             }),
 });
 
-/* ---------- EXPORTS ---------- */
 export const booksReducer = booksSlice.reducer;
-export const { toggleFavorite } = booksSlice.actions;
+export const {
+    toggleFavorite,
+    addToCart,
+    removeFromCart,
+    updateQty,
+    clearCart,
+    setRating,
+} = booksSlice.actions;

@@ -1,10 +1,19 @@
 import { HeartIcon as HeartOutline } from '@heroicons/react/24/outline';
 import { HeartIcon as HeartSolid } from '@heroicons/react/24/solid';
-import StarIcon from '../assets/star.svg';
 import type { BookType } from '../types/books';
 import { CardBookBase } from './cart-book-base';
+import { useAppDispatch, useAppSelector } from '../redux/store';
+import { RatingStars } from './rating-stars';
+import { setRating } from '../redux/books-slice';
 
 export function CardBookRowFavorite(book: BookType) {
+    const dispatch = useAppDispatch();
+    const rating = useAppSelector((s) => s.books.ratings[book.isbn13] || 0);
+
+    function handleRate(value: number) {
+        dispatch(setRating({ isbn13: book.isbn13, rating: value }));
+    }
+
     return (
         <CardBookBase book={book}>
             {({ isFav, toggleFav }) => (
@@ -22,11 +31,7 @@ export function CardBookRowFavorite(book: BookType) {
                         {/* цена + звёзды */}
                         <div className="mt-4 flex items-center gap-8">
                             <span className="text-xl font-bold">{book.price}</span>
-                            <div className="flex gap-0.5">
-                                {Array.from({ length: 5 }).map((_, i) => (
-                                    <img key={i} src={StarIcon} alt="*" className="h-4 w-4" />
-                                ))}
-                            </div>
+                            <RatingStars value={rating} onRate={handleRate} />
                         </div>
                     </div>
 

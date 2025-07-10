@@ -2,7 +2,7 @@
 import { type ReactNode } from 'react';
 import { useAppDispatch, useAppSelector } from '../redux/store';
 import type { RootState } from '../redux/store';
-import { toggleFavorite } from '../redux/books-slice';
+import { toggleFavorite, addToCart } from '../redux/books-slice';
 import type { BookType } from '../types/books';
 
 /** Отдаём детям isFav + toggleFav + dispatch‑helpers */
@@ -14,6 +14,7 @@ export function CardBookBase({
     children: (ctx: {
         isFav: boolean;
         toggleFav: () => void;
+        addToCart: () => void;
         dispatch: ReturnType<typeof useAppDispatch>;
     }) => ReactNode;
 }) {
@@ -22,6 +23,7 @@ export function CardBookBase({
         s.books.favorites.some((b) => b.isbn13 === book.isbn13),
     );
     const toggleFav = () => dispatch(toggleFavorite(book));
+    const handleAddToCart = () => dispatch(addToCart(book));
 
-    return <>{children({ isFav, toggleFav, dispatch })}</>;
+    return <>{children({ isFav, addToCart: handleAddToCart, toggleFav, dispatch })}</>;
 }

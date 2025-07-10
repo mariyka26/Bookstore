@@ -5,6 +5,7 @@ import { Navigate } from 'react-router';
 import { Layout } from './components/layout'
 import { FavoriteBooks } from './page/favorite-books'
 import { BookDetailsPage } from './page/book-details'
+import { CartBooks } from './page/cart-books'
 
 
 const routes: RouteObject[] = [
@@ -22,6 +23,10 @@ const routes: RouteObject[] = [
             {
                 path: '/favorites',
                 element: <FavoriteBooks />
+            },
+            {
+                path: '/cart',
+                element: <CartBooks />
             },
             {
                 path: '/book/:isbn13',

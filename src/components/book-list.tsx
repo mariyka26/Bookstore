@@ -38,8 +38,8 @@ export function BookList() {
                       sm:grid-cols-2 
                       lg:grid-cols-3
                       xl:gap-x-12 xl:gap-y-14">
-                {list.map((book, idx) => (
-                    <CardBookTile key={book.isbn13} index={idx} {...book} />
+                {list.map((book) => (
+                    <CardBookTile key={book.isbn13} {...book} />
                 ))}
             </div>
         </div>

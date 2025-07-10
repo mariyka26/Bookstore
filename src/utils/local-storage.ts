@@ -1,4 +1,6 @@
-export function loadFavorites() {
+import type { BookType } from '../types/books';
+
+export function loadFavorites(): BookType[] {
     try {
         const json = localStorage.getItem('favorites');
         return json ? JSON.parse(json) : [];
@@ -7,10 +9,35 @@ export function loadFavorites() {
     }
 }
 
-export function saveFavorites(favs: unknown) {
+export function saveFavorites(favs: BookType[]): void {
     try {
         localStorage.setItem('favorites', JSON.stringify(favs));
     } catch {
         /* ignore */
     }
 }
+
+export function loadCart(): BookType[] {
+    try {
+        const cart = localStorage.getItem('cart');
+        return cart ? JSON.parse(cart) : [];
+    } catch {
+        return [];
+    }
+}
+
+export function saveCart(cart: BookType[]): void {
+    localStorage.setItem('cart', JSON.stringify(cart));
+}
+
+export const loadRatings = (): Record<string, number> => {
+    try {
+        return JSON.parse(localStorage.getItem('ratings') || '{}');
+    } catch {
+        return {};
+    }
+};
+
+export const saveRatings = (ratings: Record<string, number>) => {
+    localStorage.setItem('ratings', JSON.stringify(ratings));
+};

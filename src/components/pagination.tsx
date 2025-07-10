@@ -70,8 +70,8 @@ export function Pagination({
       to={`/books/${query}/${page}`}
       className={({ isActive }) =>
         `px-3 py-2 text-sm rounded-md transition
-         hover:bg-green-100 text-gray-700
-         ${isActive ? 'bg-green-600 text-white hover:bg-green-600' : ''}`
+         hover:bg-teal-50 text-gray-700
+         ${isActive ? 'bg-teal-600 text-white hover:bg-teal-600' : ''}`
       }
     >
       {children}

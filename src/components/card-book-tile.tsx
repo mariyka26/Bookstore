@@ -1,20 +1,27 @@
 // components/CardBookTile.tsx
 import { CardBookBase } from './cart-book-base';
-import StarIcon from '../assets/star.svg';
 import { HeartIcon as HeartOutline } from '@heroicons/react/24/outline';
 import { HeartIcon as HeartSolid } from '@heroicons/react/24/solid';
 import { showCoverPreview, setCoverPreview } from '../redux/book-cover-preview-slice'
-import { useAppDispatch } from '../redux/store';
+import { useAppDispatch, useAppSelector } from '../redux/store';
 import { Link } from 'react-router';
+import { RatingStars } from './rating-stars';
+import { setRating } from '../redux/books-slice';
 import type { BookType } from '../types/books';
 
 export function CardBookTile(book: BookType) {
     const dispatch = useAppDispatch();
+    const rating = useAppSelector((s) => s.books.ratings[book.isbn13] || 0);
 
     function handleClickCoverPreview() {
         dispatch(setCoverPreview(book))
         dispatch(showCoverPreview())
     }
+
+    function handleRate(value: number) {
+        dispatch(setRating({ isbn13: book.isbn13, rating: value }));
+    }
+
     return (
         <CardBookBase book={book}>
             {({ isFav, toggleFav }) => (
@@ -32,11 +39,7 @@ export function CardBookTile(book: BookType) {
                         {/* цена + звёзды + сердечко */}
                         <div className="flex items-center justify-between w-full">
                             <span className="text-base font-semibold">{book.price}</span>
-                            <div className="flex gap-0.5">
-                                {Array.from({ length: 5 }).map((_, i) => (
-                                    <img key={i} src={StarIcon} alt="*" className="h-4 w-4" />
-                                ))}
-                            </div>
+                            <RatingStars value={rating} onRate={handleRate} />
 
                             <button onClick={toggleFav}>
                                 {isFav ? (
@@ -49,7 +52,7 @@ export function CardBookTile(book: BookType) {
 
                         <Link
                             to={`/book/${book.isbn13}`}
-                            className="mt-4 w-full text-center text-xs bg-green-600 text-white py-2 rounded-lg"
+                            className="mt-4 w-full text-center text-xs bg-teal-600 text-white py-2 rounded-lg"
                         >
                             Читать далее
                         </Link>

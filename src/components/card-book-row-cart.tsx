@@ -1,40 +1,69 @@
-import HeartSolidIcon from '../assets/heart-solid.svg';
-import HeartIcon from '../assets/heart-regular.svg';
-import CloseIcon from '../assets/close.svg';
-import type { BookType } from '../types/books';
-import { useState } from 'react';
+import { useAppDispatch } from '../redux/store';
+import { removeFromCart, updateQty } from '../redux/books-slice';
+import { XMarkIcon } from '@heroicons/react/24/outline';
 import { CardBookBase } from './cart-book-base';
+import { useState, useEffect } from 'react';
+import type { BookType } from '../types/books';
 
-export function CardBookRowCart(book: BookType) {
-    const [qty, setQty] = useState(1);
+type BookWithQty = BookType & { qty?: number };
+
+export function CardBookRowCart(book: BookWithQty) {
+    const initialQty = book.qty ?? 1;
+    const [qty, setQty] = useState(initialQty);
+    const dispatch = useAppDispatch();
+
+    // сохраняем новое количество в redux + localStorage
+    useEffect(() => {
+        dispatch(updateQty({ isbn13: book.isbn13, qty }));
+    }, [qty]);
+
+    const numericPrice = parseFloat(book.price.replace(/[^0-9.]/g, '')) || 0;
+    const totalPrice = (numericPrice * qty).toFixed(2);
 
     return (
         <CardBookBase book={book}>
-            {({ isFav, toggleFav }) => (
-                <div className="relative flex items-center gap-6 p-4 rounded-2xl shadow-sm">
-                    <img src={book.image} alt={book.title} className="w-24 h-32 rounded-lg" />
+            {() => (
+                <div className="relative flex items-center gap-6 p-4 rounded-2xl shadow-sm hover:shadow-md transition ">
+                    <img
+                        src={book.image}
+                        alt={book.title}
+                        className="w-24 h-32 object-cover rounded-md"
+                    />
 
                     <div className="flex flex-col flex-grow">
-                        <h3 className="font-semibold text-sm lg:text-base mb-1 line-clamp-2">{book.title}</h3>
-                        <p className="text-xs text-gray-500 mb-4">{book.subtitle}</p>
+                        <h3 className="font-semibold text-sm lg:text-base mb-1 leading-snug max-w-xl line-clamp-2">
+                            {book.title}
+                        </h3>
 
-                        {/* количество */}
-                        <div className="flex items-center gap-4">
-                            <button onClick={() => setQty((q) => Math.max(1, q - 1))}>&minus;</button>
-                            <span className="w-4 text-center">{qty}</span>
-                            <button onClick={() => setQty((q) => q + 1)}>+</button>
+                        {/* Количество */}
+                        <div className="flex items-center gap-4 mt-2">
+                            <button
+                                onClick={() => setQty((q) => Math.max(1, q - 1))}
+                                className="text-xl px-2"
+                            >
+                                −
+                            </button>
+                            <span className="w-4 text-center text-sm">{qty}</span>
+                            <button
+                                onClick={() => setQty((q) => q + 1)}
+                                className="text-xl px-2"
+                            >
+                                +
+                            </button>
                         </div>
                     </div>
 
-                    <div className="flex flex-col items-end gap-2">
-                        <span className="text-xl font-bold">{book.price}</span>
-                        <button onClick={toggleFav}>
-                            <img src={isFav ? HeartSolidIcon : HeartIcon} className="h-5 w-5" />
-                        </button>
+                    {/* Итоговая цена */}
+                    <div className="ml-auto flex flex-col items-end text-right gap-2">
+                        <span className="text-xl font-bold">${totalPrice}</span>
                     </div>
 
-                    <button onClick={toggleFav} className="absolute top-3 right-3">
-                        <img src={CloseIcon} className="h-4 w-4" />
+                    <button
+                        onClick={() => dispatch(removeFromCart(book.isbn13))}
+                        className="absolute top-3 right-3"
+                        aria-label="Remove from cart"
+                    >
+                        <XMarkIcon className="h-4 w-4 opacity-60 hover:opacity-100" />
                     </button>
                 </div>
             )}

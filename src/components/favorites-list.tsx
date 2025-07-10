@@ -1,17 +1,30 @@
 import { CardBookRowFavorite } from './card-book-row-favorite';
-import { useAppSelector, type RootState } from '../redux/store';
+import { CardBookRowCart } from './card-book-row-cart';
+import type { BookType } from '../types/books';
 
-export function FavoriteBooksList() {
-    const favorites = useAppSelector((s: RootState) => s.books.favorites);
+type Variant = 'favorite' | 'cart';
 
-    if (!favorites.length)
-        return <p className="text-center text-gray-500">Здесь пока пусто — добавьте книги ♥</p>;
+type Props = {
+    books: BookType[];
+    variant: Variant;
+    emptyText?: string;
+};
+
+export function BookListVertical({ books, variant, emptyText = 'Здесь пока пусто' }: Props) {
+    if (!books.length) {
+        return <p className="text-center text-gray-500">{emptyText}</p>;
+    }
 
     return (
         <div className="space-y-4">
-            {favorites.map((b) => (
-                <CardBookRowFavorite key={b.isbn13} {...b} />
-            ))}
+            {books.map((book) => {
+                const key = book.isbn13;
+                return variant === 'favorite' ? (
+                    <CardBookRowFavorite key={key} {...book} />
+                ) : (
+                    <CardBookRowCart key={key} {...book} />
+                );
+            })}
         </div>
     );
 }

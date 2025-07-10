@@ -6,15 +6,15 @@ import {
     fetchBookDetails,
     clearBookDetails
 } from '../redux/book-details-slice';
+import { addToCart } from '../redux/books-slice';
 import { CardBookBase } from './cart-book-base';   // проверь путь!
 import type { BookType } from '../types/books';
 
 
 export function BookDetails(): React.ReactElement {
     // ISBN из маршрута
-    // const { isbn13 = '' } = useParams<{ isbn13?: string }>();
-    const { isbn13 } = useParams();
-    console.log('isbn13 param:', isbn13);
+    const { isbn13 = '' } = useParams<{ isbn13?: string }>();
+
 
     const dispatch = useAppDispatch();
     const {
@@ -28,7 +28,10 @@ export function BookDetails(): React.ReactElement {
         if (isbn13) {
             dispatch(fetchBookDetails(isbn13));
         }
-        return () => dispatch(clearBookDetails());
+
+        return () => {
+            dispatch(clearBookDetails());
+        };
     }, [isbn13, dispatch]);
 
     /* -------------------- UI -------------------- */
@@ -114,7 +117,7 @@ export function BookDetails(): React.ReactElement {
                             </table>
 
                             <button
-                                onClick={() => console.log('add to cart')}
+                                onClick={() => dispatch(addToCart(book as BookType))}
                                 className="self-start bg-gray-800 text-white px-6 py-3 rounded-lg"
                             >
                                 Add to cart
