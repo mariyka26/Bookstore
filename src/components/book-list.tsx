@@ -26,13 +26,6 @@ export function BookList() {
 
     return (
         <div>
-            <Pagination
-                total={total}
-                currentPage={currentPage}
-                query={query}
-                limit={BOOKS_LIMIT}
-            />
-
             {/* GRID */}
             <div className="grid gap-8 
                       sm:grid-cols-2 
@@ -42,6 +35,13 @@ export function BookList() {
                     <CardBookTile key={book.isbn13} {...book} />
                 ))}
             </div>
+
+            <Pagination
+                total={total}
+                currentPage={currentPage}
+                query={query}
+                limit={BOOKS_LIMIT}
+            />
         </div>
     );
 }

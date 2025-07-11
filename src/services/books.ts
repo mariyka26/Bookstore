@@ -27,7 +27,7 @@ export async function requestBooks(
 
     for (let p = apiPageStart; p <= apiPageEnd; p++) {
         const url = baseUrl +
-            listNewBooksEndpoint
+            listBooksEndpoint
                 .replace('{query}', encodeURIComponent(query))
                 .replace('{page}', String(p));
 
@@ -58,4 +58,16 @@ export async function requestBookDetails(isbn13: string): Promise<BookDetailsTyp
     const { data } = await get<BookDetailsApiResponse>(url);
 
     return data;
+}
+
+export async function requestNewBooks(): Promise<BooksResponseType> {
+    const url = baseUrl + listNewBooksEndpoint;
+    const { data } = await get<RawBooksApiResponse>(url);
+
+    return {
+        error: '0',
+        total: String(data.books.length),
+        page: '1',
+        books: data.books,
+    };
 }

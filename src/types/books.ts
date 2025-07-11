@@ -15,6 +15,7 @@ export type BookType = {
     image: string;
     url: string;
     qty?: number
+    pdf?: Record<string, string>;
 };
 
 /** То, что возвращает API  ITBookStore за один запрос */
@@ -67,6 +68,7 @@ export type BookDetailsType = {
     authors: string[];
     format?: string;
     language?: string;
+    pdf?: Record<string, string>;
 };
 
 export type BookDetailsApiResponse = BookDetailsType;

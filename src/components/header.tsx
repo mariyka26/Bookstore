@@ -5,13 +5,14 @@ import {
   ShoppingBagIcon,
   UserCircleIcon,
   MagnifyingGlassIcon,
+  ArchiveBoxIcon,
+  SparklesIcon,
 } from '@heroicons/react/24/outline';
 import React, { type ReactElement, type ComponentType } from 'react'
 
 interface FooterProps {
   container: ComponentType<{ children: React.ReactNode }>
 }
-
 
 export function Header({ container: Container }: FooterProps): ReactElement {
   const [query, setQuery] = useState('');
@@ -31,7 +32,7 @@ export function Header({ container: Container }: FooterProps): ReactElement {
           <div className="flex h-16 items-center justify-between ">
             {/* ---------- ЛОГО ---------- */}
             <NavLink
-              to="/books/react/1"
+              to="/books/new/1"
               className="text-2xl font-extrabold tracking-wide text-gray-800 select-none"
             >
               BOOKSTORE
@@ -63,6 +64,14 @@ export function Header({ container: Container }: FooterProps): ReactElement {
             {/* ---------- ИКОНКИ ---------- */}
             <nav className="flex items-center gap-6">
 
+              <NavLink to="/books/new/1" className="group">
+                <SparklesIcon className="h-6 w-6 text-gray-700 group-hover:text-green-600 transition-colors" />
+              </NavLink>
+
+              <NavLink to="/books/all/1" className="group">
+                <ArchiveBoxIcon className="h-6 w-6 text-gray-700 group-hover:text-green-600 transition-colors" />
+              </NavLink>
+
               <NavLink to="/favorites" className="group">
                 <HeartIcon className="h-6 w-6 text-gray-700 group-hover:text-green-600 transition-colors" />
               </NavLink>
@@ -80,4 +89,4 @@ export function Header({ container: Container }: FooterProps): ReactElement {
       </header>
     </Container>
   );
-};
+}
