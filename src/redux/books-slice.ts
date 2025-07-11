@@ -7,7 +7,16 @@ import type {
     BookWithQty
 } from '../types/books';
 import { requestBooks } from '../services/books';
-import { loadFavorites, saveFavorites, loadCart, saveCart, loadRatings, saveRatings } from '../utils/local-storage';
+import {
+    loadFavorites,
+    saveFavorites,
+    loadCart,
+    saveCart,
+    loadRatings,
+    saveRatings,
+    loadRecentlyViewed,
+    saveRecentlyViewed
+} from '../utils/local-storage';
 
 export const BOOKS_LIMIT = 12;
 
@@ -30,7 +39,8 @@ const initialState: BooksStateType = {
     error: null,
     favorites: loadFavorites(),
     cart: loadCart(),
-    ratings: loadRatings()
+    ratings: loadRatings(),
+    recentlyViewed: loadRecentlyViewed(),
 };
 
 export const booksSlice = createSlice({
@@ -72,16 +82,29 @@ export const booksSlice = createSlice({
                 saveCart(state.cart);
             }
         },
+
         clearCart: (state) => {
             state.cart = [];
             saveCart(state.cart);
         },
+
         setRating: (
             state,
             { payload }: PayloadAction<{ isbn13: string; rating: number }>
         ) => {
             state.ratings[payload.isbn13] = payload.rating;
             saveRatings(state.ratings);
+        },
+
+        addToRecentlyViewed: (state, { payload }: PayloadAction<BookType>) => {
+            const exists = state.recentlyViewed.find(b => b.isbn13 === payload.isbn13);
+            if (!exists) {
+                state.recentlyViewed.unshift(payload);
+                if (state.recentlyViewed.length > 10) {
+                    state.recentlyViewed.pop(); // максимум 10 книг
+                }
+                saveRecentlyViewed(state.recentlyViewed); // ← сохранить
+            }
         },
     },
 
@@ -110,4 +133,5 @@ export const {
     updateQty,
     clearCart,
     setRating,
+    addToRecentlyViewed,
 } = booksSlice.actions;

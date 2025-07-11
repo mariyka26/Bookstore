@@ -42,6 +42,7 @@ export type BooksStateType = {
     favorites: BookType[];  // «избранное»
     cart: BookType[];       // «корзина»
     ratings: Record<string, number>;  // рейтинги
+    recentlyViewed: BookType[];
 };
 
 export type BooksActionType = {

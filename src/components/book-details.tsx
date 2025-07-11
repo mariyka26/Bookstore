@@ -6,7 +6,7 @@ import {
     fetchBookDetails,
     clearBookDetails
 } from '../redux/book-details-slice';
-import { addToCart } from '../redux/books-slice';
+import { addToCart, addToRecentlyViewed } from '../redux/books-slice';
 import { CardBookBase } from './cart-book-base';   // проверь путь!
 import type { BookType } from '../types/books';
 
@@ -33,6 +33,12 @@ export function BookDetails(): React.ReactElement {
             dispatch(clearBookDetails());
         };
     }, [isbn13, dispatch]);
+
+    useEffect(() => {
+        if (book) {
+            dispatch(addToRecentlyViewed(book)); // 👈 сюда
+        }
+    }, [book, dispatch]);
 
     /* -------------------- UI -------------------- */
     if (isLoading) {

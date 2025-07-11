@@ -41,3 +41,20 @@ export const loadRatings = (): Record<string, number> => {
 export const saveRatings = (ratings: Record<string, number>) => {
     localStorage.setItem('ratings', JSON.stringify(ratings));
 };
+
+export function loadRecentlyViewed(): BookType[] {
+    try {
+        const json = localStorage.getItem('recentlyViewed');
+        return json ? JSON.parse(json) : [];
+    } catch {
+        return [];
+    }
+}
+
+export function saveRecentlyViewed(books: BookType[]): void {
+    try {
+        localStorage.setItem('recentlyViewed', JSON.stringify(books));
+    } catch {
+        /* ignore */
+    }
+}
