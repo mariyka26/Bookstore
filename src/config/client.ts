@@ -1,14 +1,13 @@
 import axios from 'axios'
 import { baseUrl } from './api'
 
-// Создание экземпляра axios с базовым URL
 const client = axios.create({
     baseURL: baseUrl
 });
 
-// Перехватчик запросов (можно оставить, если нужно выполнять дополнительные действия)
+// Перехватчик запросов
 client.interceptors.request.use(function (config) {
-    // Можно выполнять дополнительные действия с конфигурацией запроса, если необходимо
+   
     return config;
 });
 

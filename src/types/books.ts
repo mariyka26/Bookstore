@@ -16,6 +16,11 @@ export type BookType = {
     url: string;
     qty?: number
     pdf?: Record<string, string>;
+    desc?: string;
+    authors?: string | string[];
+    publisher?: string;
+    language?: string;
+    format?: string;
 };
 
 /** То, что возвращает API  ITBookStore за один запрос */
@@ -26,7 +31,6 @@ export type RawBooksApiResponse = {
     books: BookType[];  // всегда ≤ 10 книг
 };
 
-/** Объединённый, «агрегированный» ответ вашего сервиса */
 export type BooksResponseType = {
     error: '0';
     total: string;      // то же, но строкой
@@ -74,3 +78,24 @@ export type BookDetailsType = {
 export type BookDetailsApiResponse = BookDetailsType;
 
 export type BookWithQty = BookType & { qty?: number };
+export interface OutletContextType {
+    setTitle: (title: string) => void;
+    setBreadcrumbs: (breadcrumbs: Array<{ label: string; to: string }>) => void;
+    setShowSubscribe: (showSubscribe: boolean) => void;
+}
+
+export interface LayoutContextType {
+    title: string;
+    setTitle: (title: string) => void;
+    breadcrumbs: Array<{ label: string; to: string }>;
+    setBreadcrumbs: (breadcrumbs: Array<{ label: string; to: string }>) => void;
+    showSubscribe: boolean;
+    setShowSubscribe: (showSubscribe: boolean) => void;
+}
+
+export type BookPreviewStateType = {
+    isShownModal: boolean
+    data: BookType | null
+}
+
+export type PageItem = number | 'DOTS';

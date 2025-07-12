@@ -12,9 +12,7 @@ export function loadFavorites(): BookType[] {
 export function saveFavorites(favs: BookType[]): void {
     try {
         localStorage.setItem('favorites', JSON.stringify(favs));
-    } catch {
-        /* ignore */
-    }
+    } catch { }
 }
 
 export function loadCart(): BookType[] {
@@ -54,7 +52,5 @@ export function loadRecentlyViewed(): BookType[] {
 export function saveRecentlyViewed(books: BookType[]): void {
     try {
         localStorage.setItem('recentlyViewed', JSON.stringify(books));
-    } catch {
-        /* ignore */
-    }
+    } catch { }
 }

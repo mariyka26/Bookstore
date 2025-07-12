@@ -1,26 +1,43 @@
+import { useParams } from 'react-router';
+import { useAppDispatch, useAppSelector } from '../redux/store';
+import { fetchBookDetails, clearBookDetails } from '../redux/book-details-slice';
+import { addToRecentlyViewed } from '../redux/books-slice';
 import { useEffect } from 'react';
-import { useOutletContext } from 'react-router'
-import { BookDetails } from '../components/book-details'
-import type { OutletContextType } from '../types/types'
-import { useAppSelector } from '../redux/store';
-import { BookSlider } from '../components/book-slider';
+import { useOutletContext } from 'react-router';
+import type { OutletContextType } from '../types/books';
+import { BookCardContainer } from '../components/container/book-card-container';
+import { BookSliderContainer } from '../components/container/book-slider-container';
 
-export function BookDetailsPage(): React.ReactElement {
-    console.log('BookDetailsPage');
+export function BookDetailsPage(): React.ReactElement | null {
+    const { isbn13 } = useParams<{ isbn13: string }>();
+    const dispatch = useAppDispatch();
     const { setTitle, setShowSubscribe } = useOutletContext<OutletContextType>()
     const book = useAppSelector((state) => state.bookDetails.data);
-    const recentlyViewed = useAppSelector((s) => s.books.recentlyViewed);
+
+    useEffect(() => {
+        if (isbn13) {
+            dispatch(fetchBookDetails(isbn13));
+        }
+
+        return () => {
+            dispatch(clearBookDetails());
+        };
+    }, [isbn13, dispatch]);
 
     useEffect(() => {
         if (!book) return;
         setTitle(book.title)
         setShowSubscribe(true);
-    }, [book, setTitle, setShowSubscribe])
+
+        dispatch(addToRecentlyViewed(book));
+    }, [book, setTitle, setShowSubscribe, dispatch]);
+
+    if (!book) return null;
 
     return (
         <>
-            <BookDetails />
-            <BookSlider books={recentlyViewed} title="Recently Viewed" />
+            <BookCardContainer book={book} view="details" />
+            <BookSliderContainer type="recent" title="Вы недавно смотрели" />
         </>
     );
 }

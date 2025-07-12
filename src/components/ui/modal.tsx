@@ -8,10 +8,6 @@ export interface ModalProps {
     children: ReactNode;
 }
 
-/**
- * Tailwind‑modal с плавным появлением.
- * Рендерится в fixed‑overlay, центрируется inline‑block‑трюком.
- */
 export const Modal: React.FC<ModalProps> = ({
     isOpen,
     onClose,

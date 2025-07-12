@@ -92,19 +92,25 @@ export const booksSlice = createSlice({
             state,
             { payload }: PayloadAction<{ isbn13: string; rating: number }>
         ) => {
+            console.log("Setting rating:", payload);
             state.ratings[payload.isbn13] = payload.rating;
             saveRatings(state.ratings);
         },
 
         addToRecentlyViewed: (state, { payload }: PayloadAction<BookType>) => {
-            const exists = state.recentlyViewed.find(b => b.isbn13 === payload.isbn13);
-            if (!exists) {
-                state.recentlyViewed.unshift(payload);
-                if (state.recentlyViewed.length > 10) {
-                    state.recentlyViewed.pop(); // максимум 10 книг
-                }
-                saveRecentlyViewed(state.recentlyViewed); // ← сохранить
+            // Удаляем книгу из списка, если она уже там есть
+            state.recentlyViewed = state.recentlyViewed.filter(b => b.isbn13 !== payload.isbn13);
+
+            // Добавляем книгу в начало списка
+            state.recentlyViewed.unshift(payload);
+
+            // Ограничиваем список до 10 книг
+            if (state.recentlyViewed.length > 10) {
+                state.recentlyViewed.pop();
             }
+
+            // Сохраняем обновленный список
+            saveRecentlyViewed(state.recentlyViewed);
         },
     },
 

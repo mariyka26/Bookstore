@@ -1,15 +1,14 @@
-import { useState } from 'react';
 import { StarIcon as StarSolid } from '@heroicons/react/24/solid';
 import { StarIcon as StarOutline } from '@heroicons/react/24/outline';
 
 type Props = {
-    value: number; // текущее значение рейтинга
-    onRate: (value: number) => void; // вызывается при выборе
+    value: number;
+    hovered: number | null;
+    onRate: (value: number) => void;
+    onHover: (value: number | null) => void;
 };
 
-export function RatingStars({ value, onRate }: Props) {
-    const [hovered, setHovered] = useState<number | null>(null);
-
+export function RatingStars({ value, hovered, onRate, onHover }: Props) {
     return (
         <div className="flex gap-1">
             {Array.from({ length: 5 }).map((_, i) => {
@@ -20,15 +19,12 @@ export function RatingStars({ value, onRate }: Props) {
                     <button
                         key={index}
                         onClick={() => onRate(index)}
-                        onMouseEnter={() => setHovered(index)}
-                        onMouseLeave={() => setHovered(null)}
+                        onMouseEnter={() => onHover(index)}
+                        onMouseLeave={() => onHover(null)}
                         className="transition"
                     >
                         {isFilled ? (
-                            <StarSolid
-                                className="text-yellow-400"
-                                style={{ width: 20, height: 20 }}
-                            />
+                            <StarSolid className="text-yellow-400" style={{ width: 20, height: 20 }} />
                         ) : (
                             <StarOutline
                                 className={hovered ? 'text-yellow-200' : 'text-gray-300'}

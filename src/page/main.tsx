@@ -1,8 +1,8 @@
 // page/all-new-books.tsx
-import { NewBooks } from '../components/new-books';
+import { NewBooksContainer } from '../components/container/new-books-container';
 import { useEffect } from 'react';
 import { useOutletContext } from 'react-router';
-import type { OutletContextType } from '../types/types';
+import type { OutletContextType } from '../types/books';
 import { requestNewBooks } from '../services/books';
 
 export function AllNewBooks() {
@@ -12,5 +12,5 @@ export function AllNewBooks() {
         setTitle('New Books');
     }, [setTitle]);
 
-    return <NewBooks fetcher={requestNewBooks} />;
+    return <NewBooksContainer fetcher={requestNewBooks} />;
 }

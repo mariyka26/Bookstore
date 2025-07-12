@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { useOutletContext, useParams } from 'react-router';
-import { BookList } from '../components/book-list';
-import { BookCoverPreviewModal } from '../components/book-cover-preview-modal';
-import type { OutletContextType } from '../types/types';
+import { BookListContainer } from '../components/container/book-list-grid-container';
+import type { OutletContextType } from '../types/books';
+import { BookCoverPreviewModalContainer } from '../components/container/book-cover-preview-modal-container';
 
 export function AllBooks(): React.ReactElement {
     const { query } = useParams();
@@ -20,8 +20,8 @@ export function AllBooks(): React.ReactElement {
 
     return (
         <>
-            <BookList />
-            <BookCoverPreviewModal />
+            <BookListContainer />
+            <BookCoverPreviewModalContainer />
         </>
     );
 }

@@ -1,11 +1,11 @@
+// components/book/BookSlider.tsx
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation } from 'swiper/modules'; // 👈 модуль для стрелок
+import { Navigation } from 'swiper/modules';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import 'swiper/css';
 import 'swiper/css/navigation';
-
-import type { BookType } from '../types/books';
-import { CardBookTile } from './card-book-tile';
-import { ChevronLeft, ChevronRight } from 'lucide-react'; // модные иконки
+import type { BookType } from '../../../types/books';
+import { BookCardContainer } from '../../container/book-card-container';
 
 type Props = {
     books: BookType[];
@@ -13,12 +13,11 @@ type Props = {
 };
 
 export function BookSlider({ books, title }: Props) {
+
     return (
         <section className="relative my-8">
             <div className="flex items-center justify-between px-4 mb-4">
                 <h2 className="text-xl font-bold">{title}</h2>
-
-                {/* Навигация (будет использоваться Swiper'ом по селекторам) */}
                 <div className="flex gap-2">
                     <button className="swiper-button-prev-custom p-2 rounded-full bg-gray-200 hover:bg-gray-300 transition">
                         <ChevronLeft className="w-5 h-5" />
@@ -45,7 +44,7 @@ export function BookSlider({ books, title }: Props) {
             >
                 {books.map((book) => (
                     <SwiperSlide key={book.isbn13}>
-                        <CardBookTile {...book} />
+                        <BookCardContainer book={book} view="tile" />
                     </SwiperSlide>
                 ))}
             </Swiper>

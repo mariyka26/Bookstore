@@ -1,5 +1,6 @@
-import { useState, type FormEvent } from 'react';
-import { useNavigate, NavLink } from 'react-router';
+// components/ui/HeaderUI.tsx
+import React, { type ReactElement, type ComponentType, type ChangeEvent, type FormEvent } from 'react';
+import { NavLink } from 'react-router';
 import {
   HeartIcon,
   ShoppingBagIcon,
@@ -8,23 +9,15 @@ import {
   ArchiveBoxIcon,
   SparklesIcon,
 } from '@heroicons/react/24/outline';
-import React, { type ReactElement, type ComponentType } from 'react'
 
-interface FooterProps {
-  container: ComponentType<{ children: React.ReactNode }>
+interface Props {
+  container: ComponentType<{ children: React.ReactNode }>;
+  query: string;
+  onQueryChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  onSubmit: (e: FormEvent) => void;
 }
 
-export function Header({ container: Container }: FooterProps): ReactElement {
-  const [query, setQuery] = useState('');
-  const navigate = useNavigate();
-
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    if (!query.trim()) return;
-    navigate(`/books/${encodeURIComponent(query)}/1`);
-    setQuery('');
-  };
-
+export function Header({ container: Container, query, onQueryChange, onSubmit }: Props): ReactElement {
   return (
     <Container>
       <header className="border-b border-gray-200">
@@ -40,13 +33,13 @@ export function Header({ container: Container }: FooterProps): ReactElement {
 
             {/* ---------- ПОИСК ---------- */}
             <form
-              onSubmit={handleSubmit}
+              onSubmit={onSubmit}
               className="relative flex-1 max-w-2xl mx-4 hidden sm:block"
             >
               <input
                 type="text"
                 value={query}
-                onChange={(e) => setQuery(e.target.value)}
+                onChange={onQueryChange}
                 placeholder="Search"
                 className="w-full h-10 border border-gray-300 rounded-md pl-4 pr-10
                          placeholder-gray-400 focus:outline-none focus:ring-2
@@ -55,7 +48,7 @@ export function Header({ container: Container }: FooterProps): ReactElement {
               <button
                 type="submit"
                 className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500
-                         hover:text-green-600"
+                         hover:text-green-600 cursor-pointer"
               >
                 <MagnifyingGlassIcon className="h-5 w-5" />
               </button>
@@ -63,7 +56,6 @@ export function Header({ container: Container }: FooterProps): ReactElement {
 
             {/* ---------- ИКОНКИ ---------- */}
             <nav className="flex items-center gap-6">
-
               <NavLink to="/books/new/1" className="group">
                 <SparklesIcon className="h-6 w-6 text-gray-700 group-hover:text-green-600 transition-colors" />
               </NavLink>
@@ -80,7 +72,7 @@ export function Header({ container: Container }: FooterProps): ReactElement {
                 <ShoppingBagIcon className="h-6 w-6 text-gray-700 group-hover:text-green-600 transition-colors" />
               </NavLink>
 
-              <NavLink to="/profile" className="group">
+              <NavLink to="#" className="group">
                 <UserCircleIcon className="h-6 w-6 text-gray-700 group-hover:text-green-600 transition-colors" />
               </NavLink>
             </nav>
