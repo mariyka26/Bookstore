@@ -9,7 +9,7 @@ export function CartSummaryContainer({ items }: CartSummaryContainerProps) {
     const dispatch = useAppDispatch()
     const [showNotification, setShowNotification] = useState(false)
     const [lastOrderItems, setLastOrderItems] = useState<typeof items>([])
-    const [showSummary, setShowSummary] = useState(true)
+    const [showSummary] = useState(true)
 
     useEffect(() => {
         if (items.length > 0) {
