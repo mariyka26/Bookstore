@@ -24,6 +24,7 @@ export function BookCardContainer({ book, view, onRateBook }: BookCardContainerP
     const navigate = useNavigate()
     const rating = useAppSelector((s) => s.books.ratings[book.isbn13] || 0)
     const isFav = useAppSelector((s) => s.books.favorites.some((b) => b.isbn13 === book.isbn13))
+    const isInCart = useAppSelector((s) => s.books.cart.some((b) => b.isbn13 === book.isbn13))
     const [qty, setQty] = useState(book.qty ?? 1)
     const [showNotification, setShowNotification] = useState(false)
 
@@ -100,6 +101,7 @@ export function BookCardContainer({ book, view, onRateBook }: BookCardContainerP
                 <BookDetail
                     book={book}
                     isFav={isFav}
+                    isInCart={isInCart}
                     onToggleFav={onToggleFav}
                     onAddToCart={onAddToCart}
                     previewLink={previewLink}

@@ -7,6 +7,7 @@ import type { BookType, BookWithQty, BooksResponseType, PageItem } from './books
 export type BookDetailsProps = {
     book: BookType
     isFav: boolean
+    isInCart: boolean
     onToggleFav: () => void
     onAddToCart: () => void
     previewLink?: string | null
@@ -88,6 +89,8 @@ export interface HeaderProps {
     query: string
     onQueryChange: (e: ChangeEvent<HTMLInputElement>) => void
     onSubmit: (e: FormEvent) => void
+    favoritesCount: number
+    cartCount: number
 }
 
 export interface MainProps {
@@ -150,5 +153,7 @@ export type CartSummaryProps = {
     onCheckout: () => void
     disabled?: boolean
 }
+
+
 
 

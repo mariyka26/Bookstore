@@ -1,11 +1,16 @@
-import  { useState, type FormEvent, type ReactElement, type ChangeEvent } from 'react'
+import { useState, type FormEvent, type ReactElement, type ChangeEvent } from 'react'
 import { useNavigate } from 'react-router'
+import { useAppSelector } from '../../redux/store'
 import { Header } from '../ui/header'
 import type { HeaderContainerProps } from '../../types/books'
 
 export function HeaderContainer({ container: Container }: HeaderContainerProps): ReactElement {
     const [query, setQuery] = useState('')
     const navigate = useNavigate()
+    const favoritesCount = useAppSelector((s) => s.books.favorites.length)
+    const cartCount = useAppSelector((s) => 
+        s.books.cart.reduce((total, book) => total + (book.qty || 1), 0)
+    )
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault()
@@ -24,6 +29,8 @@ export function HeaderContainer({ container: Container }: HeaderContainerProps):
             query={query}
             onQueryChange={handleQueryChange}
             onSubmit={handleSubmit}
+            favoritesCount={favoritesCount}
+            cartCount={cartCount}
         />
     )
 }

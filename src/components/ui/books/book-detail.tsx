@@ -3,6 +3,7 @@ import type { BookDetailsProps } from '../../../types/book-ui'
 export function BookDetail({
     book,
     isFav,
+    isInCart,
     onToggleFav,
     onAddToCart,
     previewLink,
@@ -83,9 +84,21 @@ export function BookDetail({
                     <div className="flex flex-wrap gap-4 mt-4">
                         <button
                             onClick={onAddToCart}
-                            className="cursor-pointer bg-gray-800 text-white px-6 py-3 rounded-xl hover:bg-gray-700 transition"
+                            className={`cursor-pointer ${isInCart 
+                                ? 'bg-green-600 hover:bg-green-700' 
+                                : 'bg-gray-800 hover:bg-gray-700'} 
+                                text-white px-6 py-3 rounded-xl transition flex items-center gap-2`}
                         >
-                            Add to cart
+                            {isInCart ? (
+                                <>
+                                    <span>Added to cart</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                    </svg>
+                                </>
+                            ) : (
+                                'Add to cart'
+                            )}
                         </button>
 
                         {previewLink && (

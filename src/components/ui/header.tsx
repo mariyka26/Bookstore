@@ -4,8 +4,6 @@ import {
   ShoppingBagIcon,
   UserCircleIcon,
   MagnifyingGlassIcon,
-  ArchiveBoxIcon,
-  SparklesIcon,
 } from '@heroicons/react/24/outline'
 import type { ReactElement } from 'react'
 import type { HeaderProps } from '../../types/book-ui'
@@ -15,6 +13,8 @@ export function Header({
   query,
   onQueryChange,
   onSubmit,
+  favoritesCount,
+  cartCount,
 }: HeaderProps): ReactElement {
   return (
     <Container>
@@ -43,12 +43,12 @@ export function Header({
                 placeholder="Search"
                 className="w-full h-10 border border-gray-300 rounded-md pl-4 pr-10
                            placeholder-gray-400 focus:outline-none focus:ring-2
-                           focus:ring-green-500 focus:border-green-500 text-sm"
+                           focus:ring-teal-500 focus:border-teal-500 text-sm"
               />
               <button
                 type="submit"
                 className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500
-                         hover:text-green-600 cursor-pointer"
+                         hover:text-teal-600 cursor-pointer"
               >
                 <MagnifyingGlassIcon className="h-5 w-5" />
               </button>
@@ -57,19 +57,33 @@ export function Header({
             {/* ---------- ИКОНКИ ---------- */}
             <nav className="flex justify-center sm:justify-end items-center gap-4 sm:gap-6 flex-wrap">
               <NavLink to="/books/new/1" className="group">
-                <SparklesIcon className="h-6 w-6 text-gray-700 group-hover:text-green-600 transition-colors" />
+                <span className="group inline-flex items-center justify-center text-xs font-semibold text-gray-700 group-hover:text-teal-600 border border-gray-700 hover:border-teal-600 px-1.5 py-0.5 rounded">
+                  NEW
+                </span>
               </NavLink>
               <NavLink to="/books/all/1" className="group">
-                <ArchiveBoxIcon className="h-6 w-6 text-gray-700 group-hover:text-green-600 transition-colors" />
+                <span className="group inline-flex items-center justify-center text-xs font-semibold text-gray-700 group-hover:text-teal-600 border border-gray-700 hover:border-teal-600 px-1.5 py-0.5 rounded">
+                  ALL
+                </span>
               </NavLink>
-              <NavLink to="/favorites" className="group">
-                <HeartIcon className="h-6 w-6 text-gray-700 group-hover:text-green-600 transition-colors" />
+              <NavLink to="/favorites" className="group relative">
+                <HeartIcon className="h-6 w-6 text-gray-700 group-hover:text-teal-600 transition-colors" />
+                {favoritesCount > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-teal-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                    {favoritesCount}
+                  </span>
+                )}
               </NavLink>
-              <NavLink to="/cart" className="group">
-                <ShoppingBagIcon className="h-6 w-6 text-gray-700 group-hover:text-green-600 transition-colors" />
+              <NavLink to="/cart" className="group relative">
+                <ShoppingBagIcon className="h-6 w-6 text-gray-700 group-hover:text-teal-600 transition-colors" />
+                {cartCount > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-teal-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                    {cartCount}
+                  </span>
+                )}
               </NavLink>
               <NavLink to="#" className="group">
-                <UserCircleIcon className="h-6 w-6 text-gray-700 group-hover:text-green-600 transition-colors" />
+                <UserCircleIcon className="h-6 w-6 text-teal-700 group-hover:text-teal-600 transition-colors" />
               </NavLink>
             </nav>
           </div>
