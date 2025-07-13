@@ -1,15 +1,6 @@
-import type { BookWithQty } from '../../types/books';
+import type { CartSummaryProps } from '../../types/book-ui'
 
-type Props = {
-    items: BookWithQty[];
-    sumTotal: number;
-    vat: number;
-    total: number;
-    onCheckout: () => void;
-};
-
-export function CartSummary({ items, sumTotal, vat, total, onCheckout }: Props) {
-    if (!items.length) return null;
+export function CartSummary({ sumTotal, vat, total, onCheckout, disabled = false }: CartSummaryProps) {
 
     return (
         <div className="p-6 rounded-2xl shadow-md bg-white max-w-md ml-auto mt-8">
@@ -27,10 +18,13 @@ export function CartSummary({ items, sumTotal, vat, total, onCheckout }: Props) 
             </div>
             <button
                 onClick={onCheckout}
-                className="w-full py-2 px-4 bg-teal-600 text-white rounded-lg hover:bg-teal-500 transition"
+                disabled={disabled}
+                className={`w-full py-2 px-4 ${disabled 
+                    ? 'bg-gray-400 cursor-not-allowed' 
+                    : 'bg-teal-600 hover:bg-teal-500'} text-white rounded-lg transition`}
             >
                 Check Out
             </button>
         </div>
-    );
+    )
 }

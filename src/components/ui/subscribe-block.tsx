@@ -1,11 +1,6 @@
-type Props = {
-    email: string;
-    submitted: boolean;
-    onEmailChange: (value: string) => void;
-    onSubmit: () => void;
-};
+import type { SubscribeBlockProps } from '../../types/book-ui'
 
-export function SubscribeBlock({ email, submitted, onEmailChange, onSubmit }: Props) {
+export function SubscribeBlock({ email, submitted, onEmailChange, onSubmit }: SubscribeBlockProps) {
     return (
         <section className="bg-violet-50 py-14">
             <div className="mx-auto w-full max-w-4xl px-4 sm:px-6 lg:px-8">
@@ -18,8 +13,8 @@ export function SubscribeBlock({ email, submitted, onEmailChange, onSubmit }: Pr
 
                 <form
                     onSubmit={(e) => {
-                        e.preventDefault();
-                        onSubmit();
+                        e.preventDefault()
+                        onSubmit()
                     }}
                     className="flex flex-col sm:flex-row overflow-hidden rounded-md shadow-sm"
                 >
@@ -47,5 +42,5 @@ export function SubscribeBlock({ email, submitted, onEmailChange, onSubmit }: Pr
                 )}
             </div>
         </section>
-    );
+    )
 }

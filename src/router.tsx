@@ -1,7 +1,7 @@
 import { createBrowserRouter } from 'react-router'
 import type { RouteObject } from 'react-router'
 import { AllNewBooks } from './page/main'
-import { Navigate } from 'react-router';
+import { Navigate } from 'react-router'
 import { Layout } from './components/container/layout'
 import { FavoriteBooks } from './page/favorite-books'
 import { BookDetailsPage } from './page/book-details'
@@ -43,7 +43,6 @@ const routes: RouteObject[] = [
             }
         ]
     },
-
-];
+]
 
 export const router = createBrowserRouter(routes)

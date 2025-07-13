@@ -1,12 +1,6 @@
-import { Fragment, type ReactNode } from 'react';
-import { Dialog, Transition } from '@headlessui/react';
-
-export interface ModalProps {
-    isOpen: boolean;
-    onClose: () => void;
-    title?: string;
-    children: ReactNode;
-}
+import { Fragment } from 'react'
+import { Dialog, Transition } from '@headlessui/react'
+import type { ModalProps } from '../../types/book-ui'
 
 export const Modal: React.FC<ModalProps> = ({
     isOpen,
@@ -36,7 +30,7 @@ export const Modal: React.FC<ModalProps> = ({
 
                 {/* трюк для вертикального центрирования */}
                 <span className="inline-block h-screen align-middle" aria-hidden="true">
-                    &#8203;
+                    &#8203
                 </span>
 
                 {/* —‑‑‑ сама карточка —‑‑‑ */}
@@ -80,4 +74,4 @@ export const Modal: React.FC<ModalProps> = ({
             </div>
         </Dialog>
     </Transition>
-);
+)

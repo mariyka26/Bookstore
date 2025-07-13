@@ -1,13 +1,5 @@
-import { XMarkIcon } from '@heroicons/react/24/outline';
-import type { BookType } from '../../../types/books';
-
-type Props = {
-    book: BookType;
-    qty: number;
-    totalPrice: number;
-    onQtyChange: (newQty: number) => void;
-    onRemove: () => void;
-};
+import { XMarkIcon } from '@heroicons/react/24/outline'
+import type { CardBookRowCartProps } from '../../../types/book-ui'
 
 export function CardBookRowCart({
     book,
@@ -15,46 +7,70 @@ export function CardBookRowCart({
     totalPrice,
     onQtyChange,
     onRemove,
-}: Props): React.ReactElement {
+    onNavigateToDetails
+}: CardBookRowCartProps): React.ReactElement {
     return (
-        <div className="relative flex flex-wrap md:flex-nowrap items-center gap-6 p-4 rounded-2xl shadow-sm hover:shadow-md transition bg-white">
-            <img
-                src={book.image}
-                alt={book.title}
-                className="w-24 h-32 object-cover rounded-md flex-shrink-0"
-            />
+        <div 
+            className="relative flex flex-col md:flex-row gap-4 sm:gap-6 rounded-2xl bg-white border border-gray-100 shadow-sm hover:shadow-md transition w-full p-5 cursor-pointer"
+            onClick={onNavigateToDetails}
+        >
+            {/* Обложка */}
+            <div 
+                className="w-full md:w-1/5 flex justify-center items-center"
+                onClick={(e) => e.stopPropagation()}
+            >
+                <img
+                    src={book.image}
+                    alt={book.title}
+                    className="w-24 h-32 object-cover rounded-xl shadow-sm"
+                />
+            </div>
 
-            <div className="flex flex-col flex-grow min-w-0">
-                <h3 className="font-semibold text-sm lg:text-base mb-1 leading-snug line-clamp-2">
-                    {book.title}
-                </h3>
+            {/* Инфо + Кол-во */}
+            <div className="w-full md:w-3/5 flex flex-col justify-between gap-4 text-center md:text-left">
+                <div>
+                    <h3 className="font-semibold text-base sm:text-lg mb-1 text-gray-900 line-clamp-2">
+                        {book.title}
+                    </h3>
+                    <p className="text-sm text-gray-500">{book.subtitle}</p>
+                </div>
 
-                {/* Количество */}
-                <div className="flex items-center gap-4 mt-2">
+                <div 
+                    className="flex justify-center md:justify-start items-center gap-4"
+                    onClick={(e) => e.stopPropagation()}
+                >
                     <button
                         onClick={() => onQtyChange(Math.max(1, qty - 1))}
-                        className="text-xl px-2"
+                        className="text-xl text-gray-700 hover:text-black px-2"
                     >
                         −
                     </button>
-                    <span className="w-4 text-center text-sm">{qty}</span>
+                    <span className="w-6 text-center text-sm font-medium">{qty}</span>
                     <button
                         onClick={() => onQtyChange(qty + 1)}
-                        className="text-xl px-2"
+                        className="text-xl text-gray-700 hover:text-black px-2"
                     >
                         +
                     </button>
                 </div>
             </div>
 
-            {/* Итоговая цена */}
-            <div className="ml-auto flex flex-col items-end text-right gap-2">
-                <span className="text-xl font-bold">${totalPrice.toFixed(2)}</span>
+            {/* Цена */}
+            <div className="w-full md:w-1/5 flex justify-center md:justify-end items-center mt-2 md:mt-0">
+                <span className="text-xl font-semibold text-green-600">${totalPrice.toFixed(2)}</span>
             </div>
 
-            <button onClick={onRemove} className="absolute top-3 right-3" aria-label="Remove from cart">
-                <XMarkIcon className="h-4 w-4 opacity-60 hover:opacity-100" />
+            {/* Кнопка удалить */}
+            <button
+                onClick={(e) => {
+                    e.stopPropagation();
+                    onRemove();
+                }}
+                className="absolute top-3 right-3 text-gray-400 hover:text-red-500 transition-colors"
+                aria-label="Remove from cart"
+            >
+                <XMarkIcon className="h-5 w-5" />
             </button>
         </div>
-    );
+    )
 }

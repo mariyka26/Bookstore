@@ -1,18 +1,12 @@
-// components/book/BookSlider.tsx
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation } from 'swiper/modules';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import type { BookType } from '../../../types/books';
-import { BookCardContainer } from '../../container/book-card-container';
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Navigation } from 'swiper/modules'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
+import 'swiper/css'
+import 'swiper/css/navigation'
+import type { BookSliderProps } from '../../../types/book-ui'
+import { BookCardContainer } from '../../container/book-card-container'
 
-type Props = {
-    books: BookType[];
-    title: string;
-};
-
-export function BookSlider({ books, title }: Props) {
+export function BookSlider({ books, title }: BookSliderProps) {
 
     return (
         <section className="relative my-8">
@@ -49,5 +43,5 @@ export function BookSlider({ books, title }: Props) {
                 ))}
             </Swiper>
         </section>
-    );
+    )
 }

@@ -1,16 +1,10 @@
 import { Modal } from './modal'
+import type { BookCoverPreviewModalProps } from '../../types/book-ui'
 
-type Props = {
-    isShown: boolean;
-    image: string;
-    title: string;
-    onClose: () => void;
-};
-
-export function BookCoverPreviewModal({ isShown, image, title, onClose }: Props) {
+export function BookCoverPreviewModal({ isShown, image, title, onClose }: BookCoverPreviewModalProps) {
     return (
         <Modal isOpen={isShown} onClose={onClose} title={title}>
             <img src={image} alt={title} className="w-full rounded-md" />
         </Modal>
-    );
+    )
 }

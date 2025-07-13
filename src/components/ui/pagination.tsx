@@ -1,22 +1,16 @@
-import type { PageItem } from '../../types/books';
+import type { PaginationProps } from '../../types/book-ui'
 
-type Props = {
-  pages: PageItem[];
-  currentPage: number;
-  onPageChange: (page: number) => void;
-};
-
-export function Pagination({ pages, currentPage, onPageChange }: Props) {
-  if (pages.length <= 1) return null;
+export function Pagination({ pages, currentPage, onPageChange }: PaginationProps) {
+  if (pages.length <= 1) return null
 
   const PageBtn = ({
     page,
     children,
     disabled = false,
   }: {
-    page: number;
-    children: React.ReactNode;
-    disabled?: boolean;
+    page: number
+    children: React.ReactNode
+    disabled?: boolean
   }) => (
     <button
       onClick={() => !disabled && onPageChange(page)}
@@ -36,9 +30,9 @@ export function Pagination({ pages, currentPage, onPageChange }: Props) {
     >
       {children}
     </button>
-  );
+  )
 
-  const lastPage = Math.max(...pages.filter((p) => typeof p === 'number') as number[]);
+  const lastPage = Math.max(...pages.filter((p) => typeof p === 'number') as number[])
 
   return (
     <nav aria-label="Pagination Navigation" className="flex justify-center my-8">
@@ -75,5 +69,5 @@ export function Pagination({ pages, currentPage, onPageChange }: Props) {
         </li>
       </ul>
     </nav>
-  );
+  )
 }

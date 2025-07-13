@@ -1,19 +1,13 @@
-import { StarIcon as StarSolid } from '@heroicons/react/24/solid';
-import { StarIcon as StarOutline } from '@heroicons/react/24/outline';
+import { StarIcon as StarSolid } from '@heroicons/react/24/solid'
+import { StarIcon as StarOutline } from '@heroicons/react/24/outline'
+import type { RatingStarsProps } from '../../types/book-ui'
 
-type Props = {
-    value: number;
-    hovered: number | null;
-    onRate: (value: number) => void;
-    onHover: (value: number | null) => void;
-};
-
-export function RatingStars({ value, hovered, onRate, onHover }: Props) {
+export function RatingStars({ value, hovered, onRate, onHover }: RatingStarsProps) {
     return (
         <div className="flex gap-1">
             {Array.from({ length: 5 }).map((_, i) => {
-                const index = i + 1;
-                const isFilled = hovered !== null ? index <= hovered : index <= value;
+                const index = i + 1
+                const isFilled = hovered !== null ? index <= hovered : index <= value
 
                 return (
                     <button
@@ -32,8 +26,8 @@ export function RatingStars({ value, hovered, onRate, onHover }: Props) {
                             />
                         )}
                     </button>
-                );
+                )
             })}
         </div>
-    );
+    )
 }

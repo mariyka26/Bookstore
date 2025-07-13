@@ -1,17 +1,17 @@
-import { useAppDispatch, useAppSelector } from '../../redux/store';
-import { hideCoverPreview, clearCoverPreview } from '../../redux/book-cover-preview-slice';
-import { BookCoverPreviewModal } from '../ui/book-cover-preview-modal';
+import { useAppDispatch, useAppSelector } from '../../redux/store'
+import { hideCoverPreview, clearCoverPreview } from '../../redux/book-cover-preview-slice'
+import { BookCoverPreviewModal } from '../ui/book-cover-preview-modal'
 
 export function BookCoverPreviewModalContainer() {
-    const { data, isShownModal } = useAppSelector((s) => s.bookCoverPreview);
-    const dispatch = useAppDispatch();
+    const { data, isShownModal } = useAppSelector((s) => s.bookCoverPreview)
+    const dispatch = useAppDispatch()
 
-    if (!data) return null;
+    if (!data) return null
 
     const handleClose = () => {
-        dispatch(hideCoverPreview());
-        dispatch(clearCoverPreview());
-    };
+        dispatch(hideCoverPreview())
+        dispatch(clearCoverPreview())
+    }
 
     return (
         <BookCoverPreviewModal
@@ -20,5 +20,5 @@ export function BookCoverPreviewModalContainer() {
             title={data.title}
             onClose={handleClose}
         />
-    );
+    )
 }

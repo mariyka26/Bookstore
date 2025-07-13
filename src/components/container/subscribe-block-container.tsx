@@ -1,20 +1,20 @@
-import { useState } from 'react';
-import { SubscribeBlock } from '../ui/subscribe-block';
+import { useState } from 'react'
+import { SubscribeBlock } from '../ui/subscribe-block'
 
 export function SubscribeBlockContainer() {
-    const [email, setEmail] = useState('');
-    const [submitted, setSubmitted] = useState(false);
+    const [email, setEmail] = useState('')
+    const [submitted, setSubmitted] = useState(false)
 
     const handleSubmit = () => {
-        if (!email.trim()) return;
+        if (!email.trim()) return
 
-        console.log('Subscribed email:', email);
+        console.log('Subscribed email:', email)
 
-        setSubmitted(true);
-        setEmail('');
+        setSubmitted(true)
+        setEmail('')
 
-        setTimeout(() => setSubmitted(false), 4000);
-    };
+        setTimeout(() => setSubmitted(false), 4000)
+    }
 
     return (
         <SubscribeBlock
@@ -23,5 +23,5 @@ export function SubscribeBlockContainer() {
             onEmailChange={setEmail}
             onSubmit={handleSubmit}
         />
-    );
+    )
 }

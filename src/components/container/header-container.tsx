@@ -1,26 +1,22 @@
-// components/Header.tsx
-import React, { useState, type FormEvent, type ReactElement, type ComponentType, type ChangeEvent } from 'react';
-import { useNavigate } from 'react-router';
-import { Header } from '../ui/header';
+import  { useState, type FormEvent, type ReactElement, type ChangeEvent } from 'react'
+import { useNavigate } from 'react-router'
+import { Header } from '../ui/header'
+import type { HeaderContainerProps } from '../../types/books'
 
-interface Props {
-    container: ComponentType<{ children: React.ReactNode }>;
-}
-
-export function HeaderContainer({ container: Container }: Props): ReactElement {
-    const [query, setQuery] = useState('');
-    const navigate = useNavigate();
+export function HeaderContainer({ container: Container }: HeaderContainerProps): ReactElement {
+    const [query, setQuery] = useState('')
+    const navigate = useNavigate()
 
     const handleSubmit = (e: FormEvent) => {
-        e.preventDefault();
-        if (!query.trim()) return;
-        navigate(`/books/${encodeURIComponent(query)}/1`);
-        setQuery('');
-    };
+        e.preventDefault()
+        if (!query.trim()) return
+        navigate(`/books/${encodeURIComponent(query)}/1`)
+        setQuery('')
+    }
 
     const handleQueryChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setQuery(e.target.value);
-    };
+        setQuery(e.target.value)
+    }
 
     return (
         <Header
@@ -29,5 +25,5 @@ export function HeaderContainer({ container: Container }: Props): ReactElement {
             onQueryChange={handleQueryChange}
             onSubmit={handleSubmit}
         />
-    );
+    )
 }

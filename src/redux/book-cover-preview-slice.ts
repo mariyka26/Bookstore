@@ -1,31 +1,39 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
-import type { BookType } from '../types/books'
-import type { BookPreviewStateType } from '../types/types'
+import type { BookType, BookPreviewStateType } from '../types/books'
 
+// Начальное состояние
 const initialState: BookPreviewStateType = {
     data: null,
     isShownModal: false,
 }
 
+// Slice
 export const bookCoverPreview = createSlice({
     name: 'bookCoverPreview',
     initialState,
     reducers: {
-        setCoverPreview: (state, action: PayloadAction<BookType>) => {
+        setCoverPreview: (state, action: PayloadAction<BookType>): void => {
             state.data = action.payload
         },
-        hideCoverPreview: state => {
+        hideCoverPreview: (state): void => {
             state.isShownModal = false
         },
-        clearCoverPreview: state => {
+        clearCoverPreview: (state): void => {
             state.data = null
         },
-        showCoverPreview: state => {
+        showCoverPreview: (state): void => {
             state.isShownModal = true
         },
     },
 })
 
-export const { setCoverPreview, hideCoverPreview, clearCoverPreview, showCoverPreview } =
-    bookCoverPreview.actions
+// Reducer
 export const bookCoverPreviewReducer = bookCoverPreview.reducer
+
+// Actions
+export const {
+    setCoverPreview,
+    hideCoverPreview,
+    clearCoverPreview,
+    showCoverPreview,
+} = bookCoverPreview.actions

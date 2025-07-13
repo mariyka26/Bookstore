@@ -1,5 +1,12 @@
-import { getBooksByIsbn13Endpoint, listNewBooksEndpoint, listBooksEndpoint } from "../config/api";
-import { baseUrl } from "../config/api";
+import {
+    getBooksByIsbn13Endpoint,
+    listNewBooksEndpoint,
+    listBooksEndpoint,
+    baseUrl,
+} from '../config/api'
+
+import { get } from '../config/client'
+
 import type {
     BooksParamsType,
     BooksResponseType,
@@ -7,67 +14,62 @@ import type {
     BookType,
     BookDetailsType,
     BookDetailsApiResponse,
-} from '../types/books';
-import { get, post } from "../config/client";
+} from '../types/books'
 
-// API всегда отдаёт 10 книг
-const API_PAGE_SIZE = 10;
+const API_PAGE_SIZE = 10
 
 export async function requestBooks(
-    { query, page = 1, limit = 12 }: BooksParamsType,
+    { query, page = 1, limit = 12 }: BooksParamsType
 ): Promise<BooksResponseType> {
-    /* вычисляем диапазон нужных API‑страниц */
-    const startIndex = (page - 1) * limit;
-    const endIndex = startIndex + limit - 1;
-    const apiPageStart = Math.floor(startIndex / API_PAGE_SIZE) + 1;
-    const apiPageEnd = Math.floor(endIndex / API_PAGE_SIZE) + 1;
+    const startIndex: number = (page - 1) * limit
+    const endIndex: number = startIndex + limit - 1
+    const apiPageStart: number = Math.floor(startIndex / API_PAGE_SIZE) + 1
+    const apiPageEnd: number = Math.floor(endIndex / API_PAGE_SIZE) + 1
 
-    const all: BookType[] = [];
-    let total = 0;
+    const all: BookType[] = []
+    let total: number = 0
 
-    for (let p = apiPageStart; p <= apiPageEnd; p++) {
-        const url = baseUrl +
+    for (let p: number = apiPageStart; p <= apiPageEnd; p++) {
+        const url: string =
+            baseUrl +
             listBooksEndpoint
                 .replace('{query}', encodeURIComponent(query))
-                .replace('{page}', String(p));
+                .replace('{page}', String(p))
 
-        const { data } = await get<RawBooksApiResponse>(url);
+        const { data } = await get<RawBooksApiResponse>(url)
 
-        const numericTotal = Number(data.total);
-        if (numericTotal > 0) total = numericTotal;
+        const numericTotal: number = Number(data.total)
+        if (numericTotal > 0) total = numericTotal
 
-        all.push(...data.books);
+        all.push(...data.books)
     }
 
-    /* берём ровно limit элементов */
-    const sliceFrom = startIndex % API_PAGE_SIZE;
-    const books = all.slice(sliceFrom, sliceFrom + limit);
+    const sliceFrom: number = startIndex % API_PAGE_SIZE
+    const books: BookType[] = all.slice(sliceFrom, sliceFrom + limit)
 
-    /* приводим всё к BooksResponseType */
     return {
         error: '0',
         total: String(total),
         page: String(page),
         books,
-    };
+    }
 }
 
 export async function requestBookDetails(isbn13: string): Promise<BookDetailsType> {
-    console.log('requestBookDetails', isbn13)
-    const url = baseUrl + getBooksByIsbn13Endpoint.replace('{isbn13}', isbn13);
-    const { data } = await get<BookDetailsApiResponse>(url);
+    const url: string = baseUrl + getBooksByIsbn13Endpoint.replace('{isbn13}', isbn13)
+    const { data } = await get<BookDetailsApiResponse>(url)
 
-    return data;
+    return data
 }
 
 export async function requestNewBooks(): Promise<BooksResponseType> {
-    const url = baseUrl + listNewBooksEndpoint;
-    const { data } = await get<RawBooksApiResponse>(url);
+    const url: string = baseUrl + listNewBooksEndpoint
+    const { data } = await get<RawBooksApiResponse>(url)
 
     return {
         error: '0',
         total: String(data.books.length),
         page: '1',
         books: data.books,
-    };
+    }
 }

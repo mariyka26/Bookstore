@@ -1,11 +1,7 @@
-import React, { type ReactElement, type ComponentType } from 'react'
-
-interface FooterProps {
-    container: ComponentType<{ children: React.ReactNode }>
-}
+import type { ReactElement } from 'react'
+import type { FooterProps } from '../../types/book-ui'
 
 export function Footer({ container: Container }: FooterProps): ReactElement {
-
     return (
         <Container>
             <footer>

@@ -1,44 +1,54 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { requestBookDetails } from '../services/books';
-import type { BookDetailsType } from '../types/books';
+import { createSlice, createAsyncThunk, type PayloadAction } from '@reduxjs/toolkit'
+import { requestBookDetails } from '../services/books'
+import type { BookDetailsType, BookDetailsState } from '../types/books'
 
+// Async thunk
 export const fetchBookDetails = createAsyncThunk<
     BookDetailsType,
     string,
     { rejectValue: string }
 >('bookDetails/fetch', async (isbn13, { rejectWithValue }) => {
     try {
-        return await requestBookDetails(isbn13);
+        return await requestBookDetails(isbn13)
     } catch {
-        return rejectWithValue('Failed to load book');
+        return rejectWithValue('Failed to load book')
     }
-});
+})
 
-type BookDetailsState = {
-    data: BookDetailsType | null;
-    isLoading: boolean;
-    error: string | null;
-};
-
+// Начальное состояние
 const initialState: BookDetailsState = {
     data: null,
     isLoading: false,
     error: null,
-};
+}
 
+// Slice
 const slice = createSlice({
     name: 'bookDetails',
     initialState,
     reducers: {
-        clearBookDetails: (state) => { state.data = null; state.error = null; },
-
+        clearBookDetails: (state): void => {
+            state.data = null
+            state.error = null
+        },
     },
-    extraReducers: (builder) =>
+    extraReducers: (builder) => {
         builder
-            .addCase(fetchBookDetails.pending, (s) => { s.isLoading = true; s.error = null; })
-            .addCase(fetchBookDetails.rejected, (s, a) => { s.isLoading = false; s.error = a.payload ?? 'Error'; })
-            .addCase(fetchBookDetails.fulfilled, (s, a) => { s.isLoading = false; s.data = a.payload; }),
-});
+            .addCase(fetchBookDetails.pending, (state): void => {
+                state.isLoading = true
+                state.error = null
+            })
+            .addCase(fetchBookDetails.rejected, (state, action): void => {
+                state.isLoading = false
+                state.error = action.payload ?? 'Error'
+            })
+            .addCase(fetchBookDetails.fulfilled, (state, action: PayloadAction<BookDetailsType>): void => {
+                state.isLoading = false
+                state.data = action.payload
+            })
+    },
+})
 
-export const { clearBookDetails } = slice.actions;
-export const bookDetailsReducer = slice.reducer;
+// Экспорты
+export const { clearBookDetails } = slice.actions
+export const bookDetailsReducer = slice.reducer

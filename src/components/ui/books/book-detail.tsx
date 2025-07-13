@@ -1,12 +1,4 @@
-import type { BookType } from '../../../types/books';
-
-type BookDetailsProps = {
-    book: BookType;
-    isFav: boolean;
-    onToggleFav: () => void;
-    onAddToCart: () => void;
-    previewLink?: string | null;
-};
+import type { BookDetailsProps } from '../../../types/book-ui'
 
 export function BookDetail({
     book,
@@ -119,5 +111,5 @@ export function BookDetail({
                 </>
             )}
         </div>
-    );
+    )
 }

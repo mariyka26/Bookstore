@@ -1,23 +1,9 @@
-import type { BookType } from '../../../types/books';
-import { BookCardContainer } from '../../container/book-card-container';
-import { PaginationContainer } from '../../container/pagination-container';
+import type { BookListGridProps } from '../../../types/book-ui'
+import { BookCardContainer } from '../../container/book-card-container'
+import { PaginationContainer } from '../../container/pagination-container'
 
-type Props = {
-    books: BookType[];
-    currentPage: number;
-    total: number;
-    limit: number;
-    onPageChange: (page: number) => void;
-};
-
-export function BookList({
-    books,
-    currentPage,
-    total,
-    limit,
-    onPageChange,
-}: Props) {
-    if (!books.length) return <p className="text-center text-gray-500">Список пуст</p>;
+export function BookListGrid({ books, currentPage, total, limit, onPageChange }: BookListGridProps) {
+    if (!books.length) return <p className="text-center text-gray-500">Список пуст</p>
 
     return (
         <div>
@@ -39,5 +25,5 @@ export function BookList({
                 onPageChange={onPageChange}
             />
         </div>
-    );
+    )
 }

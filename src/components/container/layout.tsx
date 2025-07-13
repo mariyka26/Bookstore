@@ -8,8 +8,8 @@ import { SubscribeBlockContainer } from './subscribe-block-container'
 import { HeaderContainer } from './header-container'
 
 export function Layout() {
-  const [title, setTitle] = useState<string>('');
-  const [showSubscribe, setShowSubscribe] = useState(false);
+  const [title, setTitle] = useState<string>('')
+  const [showSubscribe, setShowSubscribe] = useState(false)
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -24,5 +24,5 @@ export function Layout() {
 
       <Footer container={Container} />
     </div>
-  );
-};
+  )
+}

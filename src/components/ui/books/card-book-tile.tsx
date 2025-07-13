@@ -1,17 +1,8 @@
-import { HeartIcon as HeartOutline } from '@heroicons/react/24/outline';
-import { HeartIcon as HeartSolid } from '@heroicons/react/24/solid';
-import { NavLink } from 'react-router';
-import type { BookType } from '../../../types/books';
-import { RatingStarsContainer } from '../../container/rating-stars-container';
-
-type Props = {
-    book: BookType;
-    isFav: boolean;
-    rating: number;
-    onToggleFav: () => void;
-    onRate: (value: number) => void;
-    onPreview: () => void;
-};
+import { HeartIcon as HeartOutline } from '@heroicons/react/24/outline'
+import { HeartIcon as HeartSolid } from '@heroicons/react/24/solid'
+import { NavLink } from 'react-router'
+import type { BookCardTileProps } from '../../../types/book-ui'
+import { RatingStarsContainer } from '../../container/rating-stars-container'
 
 export function CardBookTile({
     book,
@@ -19,8 +10,8 @@ export function CardBookTile({
     rating,
     onToggleFav,
     onRate,
-    onPreview,
-}: Props): React.ReactElement {
+    onPreview
+}: BookCardTileProps) {
     return (
         <div className="p-4 h-full">
             <div className="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-200 flex flex-col h-full p-4">
@@ -36,8 +27,8 @@ export function CardBookTile({
                     />
                     <button
                         onClick={(e) => {
-                            e.stopPropagation();
-                            onToggleFav();
+                            e.stopPropagation()
+                            onToggleFav()
                         }}
                         className="absolute top-2 right-2 bg-white/80 p-1.5 rounded-full hover:bg-white shadow"
                     >
@@ -49,17 +40,18 @@ export function CardBookTile({
                     </button>
                 </div>
 
-                {/* Контент */}
+                {/* Контент + кнопка */}
                 <div className="flex flex-col flex-1">
-                    <h3 className="text-sm lg:text-base font-semibold text-gray-800 text-center line-clamp-2">
-                        {book.title}
-                    </h3>
-                    <p className="text-xs text-gray-500 text-center mt-1 mb-3 line-clamp-2">
-                        {book.subtitle}
-                    </p>
+                    {/* Верхний контент */}
+                    <div className="flex-1 flex flex-col">
+                        <h3 className="text-sm lg:text-base font-semibold text-gray-800 text-center line-clamp-2">
+                            {book.title}
+                        </h3>
+                        <p className="text-xs text-gray-500 text-center mt-1 mb-3 line-clamp-2">
+                            {book.subtitle}
+                        </p>
 
-                    <div className="mt-auto pt-4 flex flex-col gap-3">
-                        <div className="flex items-center justify-between text-sm">
+                        <div className="flex items-center justify-between text-sm mt-auto">
                             <span className="font-bold text-emerald-600">{book.price}</span>
                             <RatingStarsContainer
                                 value={rating}
@@ -67,15 +59,17 @@ export function CardBookTile({
                                 isbn13={book.isbn13}
                             />
                         </div>
-                        <NavLink
-                            to={`/book/${book.isbn13}`}
-                            className="block w-full text-center text-sm font-medium bg-teal-600 hover:bg-teal-700 text-white py-2 rounded-xl transition"
-                        >
-                            Read more
-                        </NavLink>
                     </div>
+
+                    {/* Кнопка внизу */}
+                    <NavLink
+                        to={`/book/${book.isbn13}`}
+                        className="mt-4 block w-full text-center text-sm font-medium bg-teal-600 hover:bg-teal-700 text-white py-2 rounded-xl transition"
+                    >
+                        Read more
+                    </NavLink>
                 </div>
             </div>
         </div>
-    );
+    )
 }
