@@ -1,69 +1,75 @@
-# React + TypeScript + Vite
+# Bookstore
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Фронтенд-приложение для онлайн-магазина книг, разработанное с использованием **React**, **TypeScript** и **Tailwind CSS**.  
+Источником данных является публичное API: [https://api.itbook.store/](https://api.itbook.store/)
 
-Currently, two official plugins are available:
+## Основной функционал
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Страницы
+- Новые книги
+- Все книги (с пагинацией)
+- Детальная страница книги
+- Избранное
+- Корзина
 
-## Expanding the ESLint configuration
+### Поиск
+- Поиск по заголовку с мгновенным отображением результатов
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Пагинация
+- Для просмотра всех книг с разбивкой по страницам
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Слайдеры
+- Популярные книги (на основе пользовательского рейтинга)
+- Последние просмотренные книги
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+### Корзина
+- Автоматический пересчёт итоговой суммы
+- Возможность изменить количество и удалить товар
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### Избранное
+- Сохраняется в `localStorage`
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Рейтинг
+- Пользовательская система оценок
+- Сохраняется в `localStorage`
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Адаптивность
+- Полностью адаптивная верстка с использованием Tailwind CSS
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### Компоненты
+- Все компоненты являются **"глупыми" (presentational)** и получают данные только через пропсы
+- Все пропсы строго **протипизированы с помощью TypeScript**
+- Интерфейсы вынесены в отдельные файлы для переиспользования
+
+## Используемый стек
+
+- **React** (функциональные компоненты)
+- **React Router** — маршрутизация
+- **Redux Toolkit** — глобальное состояние
+- **Async Thunk** — асинхронные запросы
+- **Axios** — HTTP-запросы
+- **Tailwind CSS** — стилизация
+- **Heroicons** + **React Icons** — иконки
+- **TypeScript** — строгая типизация
+
+## Что не реализовано
+
+- Регистрация и авторизация — проект сосредоточен на клиентской части и архитектуре
+
+## Структура проекта
+
+src/
+├── components/
+│ ├── ui/ # Глупые компоненты (только разметка)
+│ └── container/ # Компоненты с логикой (Redux, useEffect и т.д.)
+├── redux/ # Redux store и слайсы
+├── services/ # API-запросы
+├── types/ # Общие типы и интерфейсы
+├── utils/ # Утилиты (работа с localStorage и пр.)
+├── pages/ # Страницы приложения
+├── config/ # Конфиги (лимиты, константы и т.д.)
+└── styles/ # Глобальные стили
+
+---
+
+> Этот проект реализован как учебный — с акцентом на чистую архитектуру, переиспользуемость компонентов и соблюдение best practices в современном фронтенде.
