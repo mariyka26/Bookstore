@@ -1,14 +1,15 @@
+import type { ReactElement } from 'react'
 import { useAppDispatch, useAppSelector } from '../../redux/store'
 import { hideCoverPreview, clearCoverPreview } from '../../redux/book-cover-preview-slice'
 import { BookCoverPreviewModal } from '../ui/book-cover-preview-modal'
 
-export function BookCoverPreviewModalContainer() {
+export function BookCoverPreviewModalContainer(): ReactElement | null {
     const { data, isShownModal } = useAppSelector((s) => s.bookCoverPreview)
     const dispatch = useAppDispatch()
 
     if (!data) return null
 
-    const handleClose = () => {
+    const handleClose = (): void => {
         dispatch(hideCoverPreview())
         dispatch(clearCoverPreview())
     }

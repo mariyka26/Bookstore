@@ -149,3 +149,10 @@ export interface LayoutContextType {
 // Вспомогательные типы
 
 export type PageItem = number | 'DOTS'
+
+export type PaginationParams = {
+    total: number
+    currentPage: number
+    limit: number
+    siblingCount: number
+}

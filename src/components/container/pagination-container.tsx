@@ -1,15 +1,11 @@
 import { Pagination } from '../ui/pagination'
 import type { PageItem } from '../../types/books'
-import type { PaginationContainerProps } from '../../types/books'
+import type { PaginationContainerProps, PaginationParams } from '../../types/books'
+import type { ReactElement } from 'react'
 
 const DOTS = 'DOTS' as const
 
-function getPaginationPages(
-    total: number,
-    currentPage: number,
-    limit: number,
-    siblingCount: number
-): PageItem[] {
+function getPaginationPages({ total, currentPage, limit, siblingCount }: PaginationParams): PageItem[] {
     const pageCount = Math.max(1, Math.ceil(total / limit))
     const totalNumbers = siblingCount * 2 + 5
     const totalBlocks = totalNumbers + 2
@@ -40,7 +36,7 @@ function range(from: number, to: number): number[] {
     return Array.from({ length: to - from + 1 }, (_, i) => from + i)
 }
 
-function cleanDots(pages: PageItem[]) {
+function cleanDots(pages: PageItem[]): PageItem[] {
     const result: PageItem[] = []
     const seen = new Set<number>()
 
@@ -62,8 +58,8 @@ export function PaginationContainer({
     limit = 12,
     siblingCount = 1,
     onPageChange,
-}: PaginationContainerProps) {
-    const pages = getPaginationPages(total, currentPage, limit, siblingCount)
+}: PaginationContainerProps): ReactElement | null {
+    const pages = getPaginationPages({ total, currentPage, limit, siblingCount })
     if (pages.length <= 1) return null
     return <Pagination pages={pages} currentPage={currentPage} onPageChange={onPageChange} />
 }

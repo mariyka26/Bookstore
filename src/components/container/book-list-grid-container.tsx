@@ -3,9 +3,10 @@ import { useParams, useNavigate } from 'react-router'
 import { useAppDispatch, useAppSelector } from '../../redux/store'
 import { fetchBooks, BOOKS_LIMIT } from '../../redux/books-slice'
 import { BookListGrid } from '../ui/books/book-list-grid'
+import type { ReactElement } from 'react'
 
-export function BookListContainer() {
-    const { query = '', page = '1' } = useParams()
+export function BookListContainer(): ReactElement | null {
+    const { query = '', page = '1' } = useParams<{ query?: string, page?: string }>()
     const currentPage = Number(page)
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
@@ -17,7 +18,7 @@ export function BookListContainer() {
         }
     }, [dispatch, query, currentPage])
 
-    const handlePageChange = (newPage: number) => {
+    const handlePageChange = (newPage: number): void => {
         navigate(`/books/${query}/${newPage}`)
     }
 

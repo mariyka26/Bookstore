@@ -4,7 +4,7 @@ import { useOutletContext } from 'react-router'
 import type { OutletContextType } from '../types/books'
 import { requestNewBooks } from '../services/books'
 
-export function AllNewBooks() {
+export function AllNewBooks(): React.ReactElement {
     const { setTitle } = useOutletContext<OutletContextType>()
 
     useEffect(() => {

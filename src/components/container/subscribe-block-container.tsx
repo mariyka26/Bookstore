@@ -2,10 +2,10 @@ import { useState } from 'react'
 import { SubscribeBlock } from '../ui/subscribe-block'
 
 export function SubscribeBlockContainer() {
-    const [email, setEmail] = useState('')
+    const [email, setEmail] = useState<string>('')
     const [submitted, setSubmitted] = useState(false)
 
-    const handleSubmit = () => {
+    const handleSubmit = (): void => {
         if (!email.trim()) return
 
         console.log('Subscribed email:', email)

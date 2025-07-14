@@ -4,6 +4,8 @@ import {
   ShoppingBagIcon,
   UserCircleIcon,
   MagnifyingGlassIcon,
+  FireIcon,
+  BookOpenIcon,
 } from '@heroicons/react/24/outline'
 import type { ReactElement } from 'react'
 import type { HeaderProps } from '../../types/book-ui'
@@ -57,14 +59,13 @@ export function Header({
             {/* ---------- ИКОНКИ ---------- */}
             <nav className="flex justify-center sm:justify-end items-center gap-4 sm:gap-6 flex-wrap">
               <NavLink to="/books/new/1" className="group">
-                <span className="group inline-flex items-center justify-center text-xs font-semibold text-gray-700 group-hover:text-teal-600 border border-gray-700 hover:border-teal-600 px-1.5 py-0.5 rounded">
-                  NEW
-                </span>
+                <FireIcon className="h-6 w-6 text-gray-700 group-hover:text-teal-600 transition-colors">
+                </FireIcon>
               </NavLink>
               <NavLink to="/books/all/1" className="group">
-                <span className="group inline-flex items-center justify-center text-xs font-semibold text-gray-700 group-hover:text-teal-600 border border-gray-700 hover:border-teal-600 px-1.5 py-0.5 rounded">
-                  ALL
-                </span>
+                <BookOpenIcon className="h-6 w-6 text-gray-700 group-hover:text-teal-600 transition-colors">
+
+                </BookOpenIcon>
               </NavLink>
               <NavLink to="/favorites" className="group relative">
                 <HeartIcon className="h-6 w-6 text-gray-700 group-hover:text-teal-600 transition-colors" />

@@ -19,8 +19,8 @@ export function CartSummary({ sumTotal, vat, total, onCheckout, disabled = false
             <button
                 onClick={onCheckout}
                 disabled={disabled}
-                className={`w-full py-2 px-4 ${disabled 
-                    ? 'bg-gray-400 cursor-not-allowed' 
+                className={`w-full py-2 px-4 ${disabled
+                    ? 'bg-gray-400 cursor-not-allowed'
                     : 'bg-teal-600 hover:bg-teal-500'} text-white rounded-lg transition`}
             >
                 Check Out

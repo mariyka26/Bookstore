@@ -3,7 +3,8 @@ import { BookCardContainer } from '../../container/book-card-container'
 import { PaginationContainer } from '../../container/pagination-container'
 
 export function BookListGrid({ books, currentPage, total, limit, onPageChange }: BookListGridProps) {
-    if (!books.length) return <p className="text-center text-gray-500">Список пуст</p>
+    if (!books.length)
+        return <p className="text-center text-gray-500">Список пуст</p>
 
     return (
         <div>

@@ -3,13 +3,14 @@ import { useAppDispatch } from '../../redux/store'
 import { clearCart } from '../../redux/books-slice'
 import { CartSummary } from '../ui/сart-summary'
 import { Notification } from '../ui/notification'
-import type { CartSummaryContainerProps } from '../../types/books'
+import type { CartSummaryContainerProps, BookWithQty } from '../../types/books'
+import type { ReactElement } from 'react'
 
-export function CartSummaryContainer({ items }: CartSummaryContainerProps) {
+export function CartSummaryContainer({ items }: CartSummaryContainerProps): ReactElement | null {
     const dispatch = useAppDispatch()
-    const [showNotification, setShowNotification] = useState(false)
-    const [lastOrderItems, setLastOrderItems] = useState<typeof items>([])
-    const [showSummary] = useState(true)
+    const [showNotification, setShowNotification] = useState<boolean>(false)
+    const [lastOrderItems, setLastOrderItems] = useState<BookWithQty[]>([])
+    const [showSummary] = useState<boolean>(true)
 
     useEffect(() => {
         if (items.length > 0) {
@@ -26,7 +27,7 @@ export function CartSummaryContainer({ items }: CartSummaryContainerProps) {
     const vat = sumTotal * 0.15
     const total = sumTotal + vat
 
-    const handleCheckout = () => {
+    const handleCheckout = (): void => {
         console.log('Order summary:', {
             items: lastOrderItems,
             sumTotal: sumTotal.toFixed(2),

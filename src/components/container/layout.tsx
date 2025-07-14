@@ -6,10 +6,11 @@ import { Title } from '../ui/title'
 import { Footer } from '../ui/footer'
 import { SubscribeBlockContainer } from './subscribe-block-container'
 import { HeaderContainer } from './header-container'
+import type { ReactElement } from 'react'
 
-export function Layout() {
+export function Layout(): ReactElement {
   const [title, setTitle] = useState<string>('')
-  const [showSubscribe, setShowSubscribe] = useState(false)
+  const [showSubscribe, setShowSubscribe] = useState<boolean>(false)
 
   return (
     <div className="min-h-screen flex flex-col">

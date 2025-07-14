@@ -117,6 +117,11 @@ export type BookCoverPreviewModalProps = {
     onClose: () => void
 }
 
+export type NotificationProps = {
+    message: string
+    isVisible: boolean
+}
+
 // Рейтинг
 
 export type RatingStarsProps = {

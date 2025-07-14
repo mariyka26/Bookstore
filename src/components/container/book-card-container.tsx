@@ -18,15 +18,16 @@ import { CardBookRowCart } from '../ui/books/card-book-row-cart'
 import { BookDetail } from '../ui/books/book-detail'
 import { Notification } from '../ui/notification'
 import type { BookCardContainerProps } from '../../types/books'
+import type { ReactElement } from 'react'
 
-export function BookCardContainer({ book, view, onRateBook }: BookCardContainerProps): React.ReactElement {
+export function BookCardContainer({ book, view, onRateBook }: BookCardContainerProps): ReactElement {
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
     const rating = useAppSelector((s) => s.books.ratings[book.isbn13] || 0)
     const isFav = useAppSelector((s) => s.books.favorites.some((b) => b.isbn13 === book.isbn13))
     const isInCart = useAppSelector((s) => s.books.cart.some((b) => b.isbn13 === book.isbn13))
-    const [qty, setQty] = useState(book.qty ?? 1)
-    const [showNotification, setShowNotification] = useState(false)
+    const [qty, setQty] = useState<number>(book.qty ?? 1)
+    const [showNotification, setShowNotification] = useState<boolean>(false)
 
     useEffect(() => {
         if (view === 'cart') {
@@ -34,9 +35,11 @@ export function BookCardContainer({ book, view, onRateBook }: BookCardContainerP
         }
     }, [qty, view, book.isbn13, dispatch])
 
-    const onToggleFav = () => dispatch(toggleFavorite(book))
+    const onToggleFav = (): void => {
+        dispatch(toggleFavorite(book))
+    }
 
-    const onRate = (value: number) => {
+    const onRate = (value: number): void => {
         if (onRateBook) {
             onRateBook(value)
         } else {
@@ -44,23 +47,28 @@ export function BookCardContainer({ book, view, onRateBook }: BookCardContainerP
         }
     }
 
-    const onAddToCart = () => {
+    const onAddToCart = (): void => {
         dispatch(addToCart(book))
         setShowNotification(true)
         setTimeout(() => setShowNotification(false), 3000)
     }
 
-    const onPreview = () => {
+    const onPreview = (): void => {
         dispatch(setCoverPreview(book))
         dispatch(showCoverPreview())
     }
 
-    const onNavigateToDetails = () => {
+    const onNavigateToDetails = (): void => {
         navigate(`/book/${book.isbn13}`)
     }
 
-    const onRemove = () => dispatch(removeFromCart(book.isbn13))
-    const previewLink = book.pdf ? Object.values(book.pdf)[0] : null
+    const onRemove = (): void => {
+        dispatch(removeFromCart(book.isbn13))
+    }
+    const previewLink: string | null = book.pdf ? Object.values(book.pdf)[0] ?? null : null
+
+    const numericPrice = parseFloat(book.price.replace(/[^0-9.]/g, '')) || 0
+    const totalPrice = numericPrice * qty
 
     return (
         <>
@@ -90,7 +98,7 @@ export function BookCardContainer({ book, view, onRateBook }: BookCardContainerP
                 <CardBookRowCart
                     book={book}
                     qty={qty}
-                    totalPrice={parseFloat(book.price.replace(/[^0-9.]/g, '')) * qty || 0}
+                    totalPrice={totalPrice}
                     onQtyChange={setQty}
                     onRemove={onRemove}
                     onNavigateToDetails={onNavigateToDetails}

@@ -16,7 +16,7 @@ export function FavoriteBooks(): React.ReactElement {
     setShowSubscribe(false)
   }, [setTitle, setShowSubscribe])
 
-  const handleRating = (isbn13: string, rating: number) => {
+  const handleRating: (isbn13: string, rating: number) => void = (isbn13, rating) => {
     dispatch(setRating({ isbn13, rating }))
   }
 
