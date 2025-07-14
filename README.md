@@ -58,17 +58,7 @@
 
 ## Структура проекта
 
-src/
-├── components/
-│ ├── ui/ # Глупые компоненты (только разметка)
-│ └── container/ # Компоненты с логикой (Redux, useEffect и т.д.)
-├── redux/ # Redux store и слайсы
-├── services/ # API-запросы
-├── types/ # Общие типы и интерфейсы
-├── utils/ # Утилиты (работа с localStorage и пр.)
-├── pages/ # Страницы приложения
-├── config/ # Конфиги (лимиты, константы и т.д.)
-└── styles/ # Глобальные стили
+<pre lang="markdown"><code>## 📁 Структура проекта ```text src/ ├── components/ │ ├── ui/ # Глупые компоненты (только разметка) │ └── container/ # Компоненты с логикой (Redux, useEffect и т.д.) ├── redux/ # Redux store и слайсы ├── services/ # API-запросы ├── types/ # Общие типы и интерфейсы ├── utils/ # Утилиты (работа с localStorage и пр.) ├── pages/ # Страницы приложения ├── config/ # Конфиги (лимиты, константы и т.д.) └── styles/ # Глобальные стили ``` </code></pre>
 
 ---
 
